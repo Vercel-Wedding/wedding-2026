@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ==============================================================
+         1. META & SOCIAL MEDIA PREVIEW
+         ============================================================== -->
+    <title>Wagma & Cem's Wedding</title>
+    <meta name="title" content="You're Invited! 🎉">
+    <meta name="description" content="We joyfully invite you to celebrate our special day with us. Tap to open the invitation!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-wedding-domain.vercel.app/">
+    <meta property="og:title" content="You're Invited! 🎉">
+    <meta property="og:description" content="We joyfully invite you to celebrate our special day with us. Tap to open the invitation!">
+    <meta property="og:image" content="https://your-wedding-domain.vercel.app/preview.png">
+    <meta property="og:site_name" content="Wagma & Cen's Wedding">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="You're Invited! 🎉">
+    <meta property="twitter:description" content="We joyfully invite you to celebrate our special day with us. Tap to open the invitation!">
+    <meta property="twitter:image" content="https://your-wedding-domain.vercel.app/preview.png">
+
+    <!-- ==============================================================
+         2. EXTERNAL FONTS & ICONS
+         ============================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- ==============================================================
+         3. MASTER CONFIGURATION (Edit Everything Here!)
+         ============================================================== -->
+    <script>
+        const WEDDING_CONFIG = {
+            FORMSPREE_ENDPOINT: "https://formspree.io/f/mnjgjabj",
+            
+            // 🎛️ FEATURE TOGGLES
+            FEATURES: {
+                useTapEmoji: false,            // Set to true to show a bouncing emoji instead of "Tap to open" text
+                customTapEmoji: "🗝️",         // The emoji to use if useTapEmoji is true (try ✨, 🤍, 💌, or 🗝️)
+                rsvpGuestCounter: false,      // Set to false to hide the +/- guest counter in RSVP
+                goldParticles: true          // Set to false to skip the 3D explosion and just fade in
+            },
+
+            // 📑 SECTION TOGGLES
+            SECTIONS: {
+                invitation: true,
+                countdown: true,
+                program: true,
+                location: true,
+                music: true,
+                gallery: true,
+                rsvp: true
+            },
+
+            // 🖼️ BACKGROUND SETTINGS
+            BACKGROUND: {
+                // Paste an image URL here to use a background image. Leave empty "" for solid color.
+                imageUrl: "", 
+                // If true, the hero splash screen hides the image, revealing it only when scrolling down.
+                showOnlyAfterHero: true
+            },
+
+            // 🎨 TOTAL CONTROL OVER ALL COLORS
+            THEME_COLORS: {
+                pageBg: '#F4EFEA',           // Base background (used for solid colors and hero mask)
+                cardBg: '#FDFBF7',           // Background of the content sections
+                primaryText: '#6B4C3A',      // Main headings, names, primary text
+                secondaryText: '#8B735F',    // Subheadings, dates, times, tiny text
+                accent: '#8B5A2B',           // Strong accents (Icons, special highlighted text)
+                accentLight: '#D2B48C',      // Subtle accents (Dividers, borders, scrollbars)
+                buttonBg: '#8B5A2B',         // Default button background
+                buttonText: '#FFFFFF',       // Default button text
+                buttonHover: '#6B4C3A',      // Default button hover state
+                inputBg: '#F4EFEA',          // Text field background
+                inputText: '#4A4A4A',        // Text field typing color
+                inputBorderFocus: '#D2B48C', // Border glow when typing
+                toastBg: '#6B4C3A',          // Success/Error popup background
+                toastText: '#FFFFFF',        // Success/Error popup text
+                musicBtnBg: '#6B4C3A',       // Floating music button background
+                musicBtnText: '#FFFFFF'      // Floating music button icon color
+            },
+
+            // ✍️ FONT CONTROL
+            THEME_FONTS: {
+                mainSerif: '"Cormorant Garamond", serif', 
+                mainSans: '"Montserrat", sans-serif',     
+                farsiSerif: '"Noto Nastaliq Urdu", serif' 
+            },
+
+            // 🎵 SPOTIFY INTEGRATION
+            SPOTIFY: {
+                url: "https://open.spotify.com/embed/playlist/6CySKuFbSiocmk86Rnd0iI",
+                darkTheme: true              
+            },
+
+            // 📏 SIZES & LAYOUTS
+            STYLING_SIZES: {
+                fontSizeSectionHeader: "24px",
+                fontSizeSubsectionHeader: "20px",
+                fontSizeNormalText: "16px",
+                fontSizeFamilyNames: "24px",
+                fontSizeHeroNames: "60px",
+                googleMapsHeight: "350px",
+                decorLineStyle: 'flourish'
+            },
+
+            // 🎼 BACKGROUND MUSIC
+            MUSIC_LOOP: {
+                fadeOutSeconds: 5.0,
+                silenceSeconds: 3.0
+                // Removed spotifyResumeDelaySeconds to keep things clean
+            },
+
+            // ✨ 3D GOLD DUST ANIMATION
+            ANIMATION: {
+                envelopeScale: 2.0,
+                particleCount: 1500,
+                durationSeconds: 10.0,
+                speedFactor: 0.25,
+                overlapTimingSeconds: 1.5,
+                sectionIconSize: 175,
+                particleColors: ['#FFD700', '#DAA520', '#F8E8A6', '#FFFFFF']
+            },
+            
+            // 📸 HIDDEN GALLERY
+            GALLERY: {
+                isLockedBeforeWedding: false, 
+                password: "gpnTTHT$ppmn5$XWGU2v06bD",             
+                style: "slideshow",                
+                slideshowSpeedSeconds: 100,    
+                images: [
+                    "images/gallery/location.png",
+                    "images/gallery/gallery.png",
+                    "images/gallery/invitation.png",
+                    "images/gallery/music.png",
+                    "images/gallery/countdown.png",
+                    "images/gallery/program.png",
+                    "images/gallery/rsvp.png",
+                    "images/gallery/location.png",
+                    "images/gallery/gallery.png",
+                    "images/gallery/invitation.png",
+                    "images/gallery/music.png",
+                    "images/gallery/countdown.png",
+                    "images/gallery/program.png",
+                    "images/gallery/rsvp.png",
+                    "images/gallery/location.png",
+                    "images/gallery/gallery.png",
+                    "images/gallery/invitation.png",
+                    "images/gallery/music.png",
+                    "images/gallery/countdown.png",
+                    "images/gallery/program.png",
+                    "images/gallery/rsvp.png"
+                ]
+            },
+
+            weddingDate: "2026-06-05T17:00:00",
+            
+            // 🕒 INDIVIDUAL TIME LISTS
+            // You can now manually define exact strings for Latin and Non-Latin languages!
+            programTimesLatin: ["17:00", "19:00", "20:00", "00:00"],
+            programTimesNonLatin: ["ساحث ۵ دیگر", "ساحت ۷", "ساحث ۸", "ساحت ۱۲"],
+            
+            audioFiles: ["audio/background_music/de.mp3", "audio/background_music/af.mp3", "audio/background_music/tr.mp3"],
+            
+            assets: {
+                heroImages: [
+                    "images/header/bride-and-groom-de.png",
+                    "images/header/bride-and-groom-af.png",
+                    "images/header/bride-and-groom-de.png"
+                ],
+                cornerFloralImage: "images/header/frame.png",
+                introVideo: "video/envelope-opening-nonbroken-seal.mp4",
+                flags: ["images/flags/de.svg", "images/flags/af.svg", "images/flags/tr.svg"],
+                icons: { invitation: "images/sections/invitation.png", countdown: "images/sections/countdown.png", program: "images/sections/program.png", location: "images/sections/location.png", music: "images/sections/music.png", gallery: "images/sections/gallery.png", rsvp: "images/sections/rsvp.png" }
+            },
+
+            location: {
+                name: "Moon Events Hamburg", address: "Ahrensburger Str. 134, 22045 Hamburg",
+                mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2368.6652937145723!2d10.105439400000002!3d53.5815899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b18bc42332e30b%3A0xf76148b71f1f5517!2sMoon%20Events%20Hamburg!5e0!3m2!1sde!2sde!4v1772806455992!5m2!1sde!2sde",
+                link: "https://www.google.com/maps/search/?api=1&query=Moon+Events+Hamburg+Ahrensburger+Str.+134+22045+Hamburg"
+            },
+
+            translations: [
+                {
+                    lang: "de", dir: "ltr", short: "Wagma & Cem", andSymbol: "&",
+                    parentsB: { n: "Familie", s: "Hayatie" }, parentsG: { n: "Familie", s: "Adıyaman" },
+                    invTitle: "Hochzeitseinladung", invMsg: "laden Sie herzlich ein, unsere Hochzeit mit uns zu feiern. Wir freuen uns, diesen ganz besonderen Moment mit Euch zu teilen!",
+                    invDate: "Freitag, 05. Juni 2026", invTime: "",
+                    cdTitle: "Countdown", days: "Tage", hours: "Std", mins: "Min", secs: "Sek",
+                    progTitle: "Tagesprogramm", progItems: ["Empfang", "Trauung", "Offenes Buffet", "Torte"],
+                    locTitle: "Standort", btnMaps: "In Maps öffnen",
+                    musicTitle: "Musikwunsch", musicMsg: "Sie können gerne Musikwünsche abgeben!", phTitle: "Song Titel", phArtist: "Künstler", btnPlaylist: "Hinzufügen",
+                    galTitle: "Galerie", galMsg: "Die Fotogalerie wird nach der Hochzeit freigeschaltet.", phPass: "Passwort", btnUnlock: "Entsperren", wrongPass: "Falsches Passwort.", toastGallery: "Galerie wird nach der Hochzeit freigeschaltet!",
+                    rsvpTitle: "RSVP", rsvpDeadline: "Bitte geben Sie uns bis zum 10. Mai 2026 Bescheid, ob Ihr kommt. Wir freuen uns auf Euch!", phName: "Name", optYes: "Ja, ich bin dabei!", optNo: "Leider kann ich es nicht schaffen.", labelGuests: "Anzahl Gäste", phDietary: "Besondere Hinweise, z. B. Allergien, Kinderstuhl etc.", btnRsvp: "Senden", toastSent: "Gesendet! ✉️", tapToOpen: "Klicke, um die Einladung zu öffnen!"
+                },
+                {
+                    lang: "af", dir: "rtl", short: "وژمه و جیم", andSymbol: "و",
+                    parentsB: { n: "فامیل", s: "حیاتـی" }, parentsG: { n: "فامیل", s: "آدیامان" },
+                    invTitle: "محفل عروسی", invMsg: "از خانواده محترم شما خواهشمندیم تا با تشریف آوری خویش صفا بخش محفل عروسی ما باشید",
+                    invDate: "جمعھ ، ۵جون ٢٠٢۶", invTime: "",
+                    cdTitle: "این قدر روز تا عروسی مانده", days: "روز", hours: "ساعت", mins: "دقیقه", secs: "ثانیه",
+                    progTitle: "برنامه روز عروسی", progItems: ["پذیرای", "عقد نکاح", "غذا", "کیک عروسی"],
+                    locTitle: "محل پذیرای", btnMaps: "نقشه",
+                    musicTitle: "انتخاب آھنگ", musicMsg: "شما می توانید با کمال میل آهنگ فرمایش بدهید", phTitle: "آهنگ", phArtist: "هنرمند", btnPlaylist: "افزودن",
+                    galTitle: "عکس ھا", galMsg: "عکس ھای عروسی بعد از محفل می توانید آنلاین تماشا کنید ،", phPass: "کود/ رمز", btnUnlock: "باز کردن", wrongPass: "کود / رمز اشتباه", toastGallery: "عکس ھای عروسی بعد از محفل می توانید آنلاین تماشا کنید ،",
+                    rsvpTitle: "جواب", rsvpDeadline: "با عرض احترام ، لطفا در صورت عدم اشتراک  خویش در محفل  تا تاریخ   ۱۰ مارج   اطلاع دهید تشکر", phName: "نام", optYes: "ما بخیر اشتراک می کنیم", optNo: "متسفانه نمی توانیم بی آییم", labelGuests: "تعداد مھمان", phDietary: "گفتنی خاص ، معلومات خاص مانند حساسیت در مقابل غذا یا چوکی برای اطفال", btnRsvp: "ارسال", toastSent: "ارسال شده ✉️", tapToOpen: "برای باز کردن دعوت نامه کلیک کنید"
+                },
+                {
+                    lang: "tr", dir: "ltr", short: "Wagma & Cem", andSymbol: "&",
+                    parentsB: { n: "Aile", s: "Hayatie" }, parentsG: { n: "Aile", s: "Adıyaman" },
+                    invTitle: "Düğün Davetİyesİ", invMsg: "Mutlu birlikteliğimize atılan ilk adım olan düğün merasimimizde siz değerli dostlarımızla beraber olmaktan onur duyarız.",
+                    invDate: "Cuma, 05 Haziran 2026", invTime: "",
+                    cdTitle: "Gerİ Sayım", days: "Gün", hours: "Saat", mins: "Dk", secs: "Sn",
+                    progTitle: "Program", progItems: ["Karşılama", "Nİkah", "Açık Büfe", "Pasta"],
+                    locTitle: "Konum", btnMaps: "Harİtada aç",
+                    musicTitle: "Müzik İsteğİ", musicMsg: "Müzik isteklerinizi iletmekten çekinmeyin!", phTitle: "Şarkı Adı", phArtist: "Sanatçı", btnPlaylist: "Ekle",
+                    galTitle: "Galerİ", galMsg: "Fotoğraflar düğünden sonra yüklenecektir.", phPass: "Şifre", btnUnlock: "Aç", wrongPass: "Yanlış şifre.", toastGallery: "Galeri düğünden sonra açılacak!",
+                    rsvpTitle: "Lütfen Cevap Verİnİz", rsvpDeadline: "10 Mayıs 2026 tarihine kadar katılıp katılmayacağınızı lütfen bize bildirin. Sizi aramızda görmekten mutluluk duyarız!", phName: "Ad Soyad", optYes: "Seve seve!", optNo: "Özür dilerim.", labelGuests: "Kİşİ", phDietary: "Özel notlar: örneğin alerji, çocuk sandalyesi ...", btnRsvp: "Gönder", toastSent: "Gönderildi! ✉️", tapToOpen: "Davetiyeyi açmak için tıklayın!"
+                }
+            ]
+        };
+    </script>
+
+    <!-- ==============================================================
+         4. DYNAMIC TAILWIND ENGINE
+         ============================================================== -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: WEDDING_CONFIG.THEME_COLORS,
+                    fontFamily: {
+                        serif: [WEDDING_CONFIG.THEME_FONTS.mainSerif],
+                        sans: [WEDDING_CONFIG.THEME_FONTS.mainSans]
+                    },
+                    keyframes: {
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '25%': { transform: 'translateX(-5px)' },
+                            '50%': { transform: 'translateX(5px)' },
+                            '75%': { transform: 'translateX(-5px)' }
+                        },
+                        tapHand: {
+                            '0%, 100%': { transform: 'translateY(0) scale(1)' },
+                            '50%': { transform: 'translateY(-10px) scale(0.95)' }
+                        }
+                    },
+                    animation: { 
+                        shake: 'shake 0.4s ease-in-out',
+                        tapHand: 'tapHand 1s infinite ease-in-out'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- ==============================================================
+         5. DYNAMIC CSS INJECTOR
+         ============================================================== -->
+    <script>
+        const accentHex = encodeURIComponent(WEDDING_CONFIG.THEME_COLORS.accentLight);
+        const svgData = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24' width='40' height='24'%3E%3Crect x='14' y='11.5' width='26' height='1' fill='${accentHex}'/%3E%3Cpath d='M15 11.5 C9 11.5 5 4 9 2 C12 0 15 4 11 5.5 C8 7 12 10 15 10.5 Z' fill='${accentHex}'/%3E%3Cpath d='M15 12.5 C9 12.5 5 20 9 22 C12 24 15 20 11 18.5 C8 17 12 14 15 13.5 Z' fill='${accentHex}'/%3E%3Cpath d='M11 12 L0 12 L6 10 Z' fill='${accentHex}'/%3E%3Cpath d='M11 12 L0 12 L6 14 Z' fill='${accentHex}'/%3E%3C/svg%3E`;
+
+        let bgCss = `background-color: ${WEDDING_CONFIG.THEME_COLORS.pageBg};`;
+        let heroBgCss = ``;
+        
+        // Background Image Injection Logic
+        if (WEDDING_CONFIG.BACKGROUND.imageUrl) {
+            bgCss += `background-image: url('${WEDDING_CONFIG.BACKGROUND.imageUrl}'); background-size: cover; background-position: center; background-attachment: fixed;`;
+            if (WEDDING_CONFIG.BACKGROUND.showOnlyAfterHero) {
+                heroBgCss = `background-color: ${WEDDING_CONFIG.THEME_COLORS.pageBg};`;
+            }
+        }
+
+        const styleEl = document.createElement('style');
+        styleEl.innerHTML = `
+            html { scroll-behavior: smooth; }
+            body.no-scroll { overflow: hidden; }
+            
+            body { ${bgCss} }
+            #hero-section { ${heroBgCss} }
+            
+            /* Reveal Animations */
+            .reveal-on-scroll { opacity: 0; transform: translateY(80px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+            .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+            /* Dynamic RTL Fonts */
+            [dir="rtl"] .font-sans, [dir="rtl"] .font-serif, [dir="rtl"] { font-family: ${WEDDING_CONFIG.THEME_FONTS.farsiSerif} !important; line-height: 2 !important; }
+            [dir="rtl"] .tracking-\[0\.3em\], [dir="rtl"] .tracking-\[0\.2em\], [dir="rtl"] .tracking-\[0\.15em\], [dir="rtl"] .tracking-widest { letter-spacing: 0 !important; }
+
+            /* Smart Latin Overrides for Farsi mode */
+            [dir="rtl"] .force-latin-sans { font-family: ${WEDDING_CONFIG.THEME_FONTS.mainSans} !important; line-height: 1.5 !important; letter-spacing: normal !important; }
+            [dir="rtl"] .force-latin-serif { font-family: ${WEDDING_CONFIG.THEME_FONTS.mainSerif} !important; line-height: 1.5 !important; letter-spacing: normal !important; }
+
+            /* Dynamic SVG Decor Lines */
+            .decor-line { transition: all 0.3s ease; height: 1px; position: relative; pointer-events: none; }
+            .left-line { mask-image: linear-gradient(to right, transparent, black 80%); -webkit-mask-image: linear-gradient(to right, transparent, black 80%); }
+            .right-line { mask-image: linear-gradient(to left, transparent, black 80%); -webkit-mask-image: linear-gradient(to left, transparent, black 80%); }
+            body[data-line-style="flourish"] .left-line::before, body[data-line-style="flourish"] .right-line::after {
+                content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 24px;
+                background-color: ${WEDDING_CONFIG.THEME_COLORS.cardBg}; background-size: contain; background-repeat: no-repeat;
+                background-image: url("${svgData}");
+            }
+            body[data-line-style="flourish"] .left-line::before { left: -2px; }
+            body[data-line-style="flourish"] .right-line::after { right: -2px; transform: translateY(-50%) scaleX(-1); }
+
+            /* UI Components */
+            .blend-mask-circle { mask-image: radial-gradient(circle, black 40%, transparent 75%); -webkit-mask-image: radial-gradient(circle, black 40%, transparent 75%); }
+            
+            #notification-box {
+                position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+                background: ${WEDDING_CONFIG.THEME_COLORS.toastBg}; color: ${WEDDING_CONFIG.THEME_COLORS.toastText}; 
+                padding: 14px 28px; border-radius: 99px; font-size: 14px; font-weight: 500;
+                z-index: 1000; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 8px; pointer-events: none;
+            }
+            #notification-box.show { transform: translateX(-50%) translateY(0); }
+
+            @keyframes musicPulse { 
+                0% { transform: scale(1); box-shadow: 0 0 0 0 ${WEDDING_CONFIG.THEME_COLORS.musicBtnBg}66; } 
+                70% { transform: scale(1.05); box-shadow: 0 0 0 10px ${WEDDING_CONFIG.THEME_COLORS.musicBtnBg}00; } 
+                100% { transform: scale(1); box-shadow: 0 0 0 0 ${WEDDING_CONFIG.THEME_COLORS.musicBtnBg}00; } 
+            }
+            .music-playing { animation: musicPulse 2s infinite; }
+
+            .flag-btn { width: 54px; height: 54px; border-radius: 50%; overflow: hidden; border: 2px solid transparent; transition: all 0.3s ease; cursor: pointer; display: flex; align-items: center; justify-content: center; background: ${WEDDING_CONFIG.THEME_COLORS.cardBg}; padding: 2px; }
+            .flag-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+            .flag-btn.active { border-color: ${WEDDING_CONFIG.THEME_COLORS.accentLight}; transform: scale(1.1); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+            
+            .top-flag-btn { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; }
+            .top-flag-btn img { width: 100%; height: 100%; object-fit: cover; }
+            .top-flag-btn.active { border-color: ${WEDDING_CONFIG.THEME_COLORS.accentLight}; opacity: 1 !important; transform: scale(1.1); }
+            .top-flag-btn:not(.active) { opacity: 0.5; }
+            .divider-v { width: 1px; height: 30px; background-color: ${WEDDING_CONFIG.THEME_COLORS.accentLight}66; }
+
+            .floral-corner { position: absolute; width: 160px; height: auto; opacity: 0; pointer-events: none; z-index: 5; transition: opacity 2s ease-in-out 1.5s; }
+            @media (min-width: 640px) { .floral-corner { width: 240px; } }
+            .floral-tl { top: 0; left: 0; transform: scale(1); }
+            .floral-tr { top: 0; right: 0; transform: scaleX(-1); }
+            .floral-bl { bottom: 0; left: 0; transform: scaleY(-1); }
+            .floral-br { bottom: 0; right: 0; transform: scale(-1); }
+            #hero-section.is-revealed .floral-corner { opacity: 0.85; }
+
+            /* Gallery Styles */
+            .custom-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-flow: row dense; gap: 1rem; width: 100%; }
+            .custom-grid-item { position: relative; border-radius: 0.75rem; overflow: hidden; background-color: ${WEDDING_CONFIG.THEME_COLORS.pageBg}; width: 100%; height: 100%; }
+            .custom-grid-item a { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
+            .custom-grid-item img { width: 100%; height: 100%; object-fit: cover; }
+            .custom-grid > div:nth-child(6n + 1) { grid-column: 1; grid-row: span 2; }
+            .custom-grid > div:nth-child(6n + 2), .custom-grid > div:nth-child(6n + 3) { grid-column: 2; aspect-ratio: 1 / 1; }
+            .custom-grid > div:nth-child(6n + 4), .custom-grid > div:nth-child(6n + 5) { grid-column: 1; aspect-ratio: 1 / 1; }
+            .custom-grid > div:nth-child(6n + 6) { grid-column: 2; grid-row: span 2; }
+            
+            .gallery-scroll-container { max-height: 500px; overflow-y: auto; padding-right: 0.5rem; width: 100%; }
+            @media (min-width: 640px) { .gallery-scroll-container { max-height: 700px; } }
+            .gallery-scroll-container::-webkit-scrollbar { width: 6px; }
+            .gallery-scroll-container::-webkit-scrollbar-track { background: ${WEDDING_CONFIG.THEME_COLORS.accentLight}22; border-radius: 10px; }
+            .gallery-scroll-container::-webkit-scrollbar-thumb { background: ${WEDDING_CONFIG.THEME_COLORS.accent}88; border-radius: 10px; }
+            .gallery-scroll-container::-webkit-scrollbar-thumb:hover { background: ${WEDDING_CONFIG.THEME_COLORS.accent}; }
+
+            .slideshow-wrapper { overflow: hidden; white-space: nowrap; width: 100%; position: relative; padding: 0.5rem 0; }
+            .slideshow-track { display: inline-flex; gap: 1rem; animation: scroll var(--slide-speed, 25s) linear infinite; }
+            .slideshow-track:hover { animation-play-state: paused; cursor: grab; }
+            @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+            .slideshow-item { height: 250px; aspect-ratio: 3/4; flex-shrink: 0; position: relative; border-radius: 0.75rem; overflow: hidden; }
+            @media (min-width: 640px) { .slideshow-item { height: 320px; } }
+            .slideshow-item img { height: 100%; width: 100%; object-fit: cover; position: absolute; inset: 0; }
+        `;
+        document.head.appendChild(styleEl);
+    </script>
+</head>
+<body class="text-primaryText font-sans no-scroll">
+
+    <!-- Global Notification Component -->
+    <div id="notification-box">
+        <i data-lucide="check-circle" width="18"></i> <span id="notification-text"></span>
+    </div>
+
+    <!-- Hidden Audio/Video Elements -->
+    <audio id="bg-music" preload="auto"></audio>
+    <canvas id="gold-dust-canvas" class="fixed inset-0 w-full h-full z-[150] pointer-events-none opacity-100 hidden"></canvas>
+
+    <!-- INITIAL LANGUAGE SCREEN -->
+    <div id="lang-screen" dir="ltr" class="fixed inset-0 z-[100] bg-cardBg flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="bg-cardBg rounded-full px-8 py-4 shadow-2xl border border-accentLight/20 flex items-center gap-4 mb-8">
+            <button id="lang-btn-0" class="flag-btn"><img id="preview-flag-0" alt="DE"></button>
+            <div class="divider-v"></div>
+            <button id="lang-btn-1" class="flag-btn"><img id="preview-flag-1" alt="AF"></button>
+            <div class="divider-v"></div>
+            <button id="lang-btn-2" class="flag-btn"><img id="preview-flag-2" alt="TR"></button>
+        </div>
+        <p class="text-secondaryText tracking-[0.2em] uppercase text-[10px] sm:text-xs font-medium opacity-70">Please select your language.</p>
+    </div>
+
+    <!-- FLOATING CONTROLS -->
+    <button id="music-control" dir="ltr" class="fixed bottom-6 right-6 z-[90] w-12 h-12 bg-musicBtnBg text-musicBtnText rounded-full flex items-center justify-center shadow-lg hidden cursor-pointer transition-colors">
+        <div id="music-icon-container"><i data-lucide="volume-x" width="20" height="20"></i></div>
+    </button>
+
+    <div id="top-lang-switcher" dir="ltr" class="fixed top-6 right-6 z-[90] bg-cardBg/90 backdrop-blur rounded-full px-4 py-2 shadow-lg hidden flex items-center gap-3 border border-accentLight/20">
+        <button id="top-btn-0" class="top-flag-btn"><img id="tiny-flag-0" alt="DE"></button>
+        <div class="w-[1px] h-4 bg-accentLight/40"></div>
+        <button id="top-btn-1" class="top-flag-btn"><img id="tiny-flag-1" alt="AF"></button>
+        <div class="w-[1px] h-4 bg-accentLight/40"></div>
+        <button id="top-btn-2" class="top-flag-btn"><img id="tiny-flag-2" alt="TR"></button>
+    </div>
+
+    <!-- SPLASH SCREEN (Video Intro) -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-pageBg flex flex-col items-center justify-center transition-opacity duration-1000 hidden">
+        <div id="envelope-container" class="relative cursor-pointer group flex flex-col items-center z-10 w-full max-w-2xl mx-auto">
+            <div id="envelope-wrapper" class="w-[260px] h-[380px] sm:w-[320px] sm:h-[460px] transition-transform duration-500 group-hover:scale-105 blend-mask-circle bg-pageBg">
+                <video id="intro-video" playsinline preload="auto" class="w-full h-full object-cover transition-opacity duration-500"></video>
+            </div>
+            <div id="tap-indicator" class="mt-8 transition-opacity duration-500 flex flex-col items-center">
+                <!-- Tap content injected dynamically based on config (emoji or text) -->
+            </div>
+        </div>
+        <button id="skip-btn" class="absolute top-8 right-8 text-secondaryText hover:text-primaryText text-xs tracking-widest uppercase z-50 cursor-pointer hidden transition-colors">Skip</button>
+    </div>
+
+    <!-- MAIN INVITATION CONTENT -->
+    <main id="main-content" class="min-h-screen pb-24 px-4 md:px-8 overflow-x-hidden hidden opacity-0 transition-opacity duration-[1500ms]">
+        <div class="max-w-2xl mx-auto w-full space-y-4">
+            
+            <!-- Hero -->
+            <div id="hero-section" class="relative flex flex-col items-center justify-center min-h-[100svh] text-center opacity-0 translate-y-[20vh] transition-all duration-[2000ms] py-20 px-4 overflow-hidden">
+                <img class="floral-corner floral-tl" id="floral-tl" alt="" />
+                <img class="floral-corner floral-tr" id="floral-tr" alt="" />
+                <img class="floral-corner floral-bl" id="floral-bl" alt="" />
+                <img class="floral-corner floral-br" id="floral-br" alt="" />
+                <img id="hero-main-img" alt="Welcome" class="w-full max-w-lg h-auto object-contain drop-shadow-sm z-10">
+                <div class="absolute bottom-10 animate-bounce text-secondaryText opacity-80 cursor-pointer z-20 transition-colors" onclick="window.scrollBy({top: window.innerHeight, behavior: 'smooth'})">
+                    <i data-lucide="chevron-down" width="32" height="32" stroke-width="1.5"></i>
+                </div>
+            </div>
+
+            <!-- Invitation Text -->
+            <section id="section-invitation" class="reveal-on-scroll bg-cardBg rounded-[2rem] p-8 md:p-12 mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mt-12 relative z-10">
+                <div class="flex items-center w-full mb-8 section-decor">
+                    <div class="decor-line bg-accentLight left-line flex-grow"></div>
+                    <div id="icon-invitation" class="mx-6 shrink-0 text-accent"></div>
+                    <div class="decor-line bg-accentLight right-line flex-grow"></div>
+                </div>
+                <div class="text-center">
+                    <h2 id="title-inv" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-8 mb-8 px-2 max-w-xl mx-auto">
+                        <div id="inv-parents-bride" class="font-serif text-primaryText leading-relaxed" style="font-size: var(--fs-family);"></div>
+                        <div id="inv-parents-and" class="font-serif text-accent text-3xl sm:text-4xl italic px-2 pb-2"></div> 
+                        <div id="inv-parents-groom" class="font-serif text-primaryText leading-relaxed" style="font-size: var(--fs-family);"></div>
+                    </div>
+                    <p id="inv-message" class="font-light leading-relaxed mb-8 px-2 text-secondaryText" style="font-size: var(--fs-normal);"></p>
+                    <div id="inv-date-display" class="font-serif text-accent my-6" style="font-size: var(--fs-section);"></div>
+                    <p id="inv-time-display" class="tracking-widest uppercase font-light mt-4 text-secondaryText" style="font-size: var(--fs-normal);"></p>
+                </div>
+            </section>
+
+            <!-- Countdown -->
+            <section id="section-countdown" class="reveal-on-scroll bg-cardBg rounded-[2rem] p-8 md:p-12 mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
+                <div class="flex items-center w-full mb-8 section-decor">
+                    <div class="decor-line bg-accentLight left-line flex-grow"></div>
+                    <div id="icon-countdown" class="mx-6 shrink-0 text-accent"></div>
+                    <div class="decor-line bg-accentLight right-line flex-grow"></div>
+                </div>
+                <div class="text-center">
+                    <h2 id="title-cd" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <div class="flex justify-center gap-3 sm:gap-6 text-center" dir="ltr">
+                        <div class="flex flex-col items-center"><div id="cd-days" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-days" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                        <div class="flex flex-col items-center"><div id="cd-hours" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-hours" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                        <div class="flex flex-col items-center"><div id="cd-mins" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-mins" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                        <div class="flex flex-col items-center"><div id="cd-secs" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-secs" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Program -->
+            <section id="section-program" class="reveal-on-scroll bg-cardBg rounded-[2rem] p-8 md:p-12 mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
+                <div class="flex items-center w-full mb-8 section-decor">
+                    <div class="decor-line bg-accentLight left-line flex-grow"></div>
+                    <div id="icon-program" class="mx-6 shrink-0 text-accent"></div>
+                    <div class="decor-line bg-accentLight right-line flex-grow"></div>
+                </div>
+                <div class="text-center">
+                    <h2 id="title-prog" class="font-serif text-primaryText mb-12 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <div id="program-container" class="relative w-full max-w-sm mx-auto py-6">
+                        <div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-accentLight transform -translate-x-1/2"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location -->
+            <section id="section-location" class="reveal-on-scroll bg-cardBg rounded-[2rem] p-8 md:p-12 mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
+                <div class="flex items-center w-full mb-8 section-decor">
+                    <div class="decor-line bg-accentLight left-line flex-grow"></div>
+                    <div id="icon-location" class="mx-6 shrink-0 text-accent"></div>
+                    <div class="decor-line bg-accentLight right-line flex-grow"></div>
+                </div>
+                <div class="text-center">
+                    <h2 id="title-loc" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h3 id="loc-name" class="font-serif text-primaryText mb-2" style="font-size: var(--fs-sub);"></h3>
+                    <p id="loc-address" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
+                    <div class="w-full bg-pageBg rounded-2xl overflow-hidden relative shadow-sm">
+                        <iframe id="loc-map-iframe" src="" width="100%" style="border:0; filter: grayscale(0.5) opacity(0.9);" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a id="loc-button" href="" target="_blank" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md mt-6 cursor-pointer z-20 relative transition-colors" style="font-size: calc(var(--fs-normal) * 0.8);">
+                        <i data-lucide="map-pin" stroke-width="2" width="16" height="16"></i>
+                        <span id="btn-maps"></span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Music / Spotify -->
+            <section id="section-music" class="reveal-on-scroll bg-cardBg rounded-[2rem] p-8 md:p-12 mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
+                <div class="flex items-center w-full mb-8 section-decor">
+                    <div class="decor-line bg-accentLight left-line flex-grow"></div>
+                    <div id="icon-music" class="mx-6 shrink-0 text-accent"></div>
+                    <div class="decor-line bg-accentLight right-line flex-grow"></div>
+                </div>
+                <div class="text-center">
+                    <h2 id="title-music" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <p id="music-msg" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
+                    <form id="song-wish-form" class="space-y-5 mb-10 text-start relative z-20">
+                        <input id="song-title-ph" name="Song Titel" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
+                        <input id="song-artist-ph" name="Artist" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
+                        <button type="submit" id="song-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
+                            <i data-lucide="music" width="16"></i> <span id="btn-playlist"></span>
+                        </button>
+                    </form>
+                    
+                    <div class="w-full rounded-2xl overflow-hidden shadow-sm relative z-20 bg-pageBg">
+                        <!-- 🎵 SPOTIFY IFRAME RENDERED SECURELY IN HTML -->
+                        <iframe id="spotify-iframe" style="border-radius:16px" src="" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery -->
+            <section id="section-gallery" class="reveal-on-scroll bg-cardBg rounded-[2rem] p-8 md:p-12 mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
+                <div class="flex items-center w-full mb-8 section-decor">
+                    <div class="decor-line bg-accentLight left-line flex-grow"></div>
+                    <div id="icon-gallery" class="mx-6 shrink-0 text-accent"></div>
+                    <div class="decor-line bg-accentLight right-line flex-grow"></div>
+                </div>
+                <div class="text-center">
+                    <h2 id="title-gal" class="font-serif text-primaryText mb-6 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <p id="gal-msg" class="font-light leading-relaxed mb-8 px-2 text-secondaryText" style="font-size: var(--fs-normal);"></p>
+                    
+                    <form id="gallery-form" class="space-y-4 max-w-sm mx-auto relative z-20 transition-all duration-500">
+                        <div class="relative">
+                            <input id="gal-pass-ph" type="password" required class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 pe-12 text-center italic transition-colors focus:ring-1 focus:ring-inputBorderFocus" style="font-size: var(--fs-normal);" placeholder="">
+                            <button type="button" id="toggle-pass-btn" class="absolute end-4 top-1/2 transform -translate-y-1/2 cursor-pointer z-30 text-secondaryText hover:text-primaryText transition-colors">
+                                <i data-lucide="eye" width="18" id="icon-eye"></i>
+                                <i data-lucide="eye-off" width="18" id="icon-eye-off" class="hidden"></i>
+                            </button>
+                        </div>
+                        <p id="gal-error-msg" class="text-red-500 text-xs hidden italic mt-2"></p>
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md cursor-pointer transition-colors" style="font-size: calc(var(--fs-normal) * 0.8);">
+                            <i data-lucide="lock" width="16"></i> <span id="btn-unlock"></span>
+                        </button>
+                    </form>
+
+                    <div id="gallery-content" class="hidden w-full transition-opacity duration-1000 opacity-0 mt-8"></div>
+                </div>
+            </section>
+
+            <!-- RSVP -->
+            <section id="section-rsvp" class="reveal-on-scroll bg-cardBg rounded-[2rem] p-8 md:p-12 mb-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10">
+                <div class="flex items-center w-full mb-8 section-decor">
+                    <div class="decor-line bg-accentLight left-line flex-grow"></div>
+                    <div id="icon-rsvp" class="mx-6 shrink-0 text-accent"></div>
+                    <div class="decor-line bg-accentLight right-line flex-grow"></div>
+                </div>
+                <div class="text-center">
+                    <h2 id="title-rsvp" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <p id="rsvp-deadline-text" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
+                    
+                    <form id="rsvp-form" class="space-y-5 text-start relative z-20">
+                        <input id="rsvp-name-ph" required name="Name" type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
+                        
+                        <select name="Zusage" id="rsvp-status" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);"></select>
+                        
+                        <div id="rsvp-guest-counter-wrapper">
+                            <label id="label-guest-count" class="block font-medium uppercase tracking-[0.15em] text-secondaryText mb-2 ps-2" style="font-size: calc(var(--fs-normal) * 0.7);"></label>
+                            <div class="flex items-center w-full max-w-[140px] h-12 bg-cardBg border border-accentLight/40 rounded-xl overflow-hidden" dir="ltr">
+                                <button type="button" id="btn-guest-minus" class="flex-1 h-full border-r border-accentLight/40 flex items-center justify-center text-primaryText hover:bg-pageBg font-light cursor-pointer transition-colors" style="font-size: var(--fs-sub);">-</button>
+                                <div id="guest-count-display" class="flex-1 h-full flex items-center justify-center text-primaryText font-medium" style="font-size: var(--fs-normal);">1</div>
+                                <button type="button" id="btn-guest-plus" class="flex-1 h-full border-l border-accentLight/40 flex items-center justify-center text-primaryText hover:bg-pageBg font-light cursor-pointer transition-colors" style="font-size: var(--fs-sub);">+</button>
+                            </div>
+                            <input type="hidden" id="guest-count-input" name="Anzahl" value="1">
+                        </div>
+
+                        <textarea id="rsvp-dietary-ph" name="Hinweise" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" rows="3" placeholder=""></textarea>
+                        
+                        <button type="submit" id="rsvp-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
+                            <i data-lucide="send" width="16"></i> <span id="btn-rsvp"></span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <div class="text-center py-10 opacity-60">
+                <i data-lucide="heart" class="mx-auto text-secondaryText mb-4" width="20"></i>
+                <p id="footer-names" class="font-serif text-secondaryText" style="font-size: var(--fs-sub);"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ==============================================================
+         6. APPLICATION LOGIC
+         ============================================================== -->
+    <script>
+        class Formatter {
+            static localizeNumber(numStr, langIndex) {
+                if (numStr === undefined || numStr === null) return "";
+                if (langIndex === 1) { // 1 = Dari
+                    const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                    return numStr.toString().replace(/\d/g, x => persianDigits[x]);
+                }
+                return numStr;
+            }
+
+            /** * Scans text for Farsi/Arabic characters. If purely Latin, 
+             * forces the beautiful standard fonts to prevent Nastaliq stretching. 
+             */
+            static applySmartLatinClass(el, text, isSerif) {
+                if (!el || !text) return;
+                const hasFarsi = /[\u0600-\u06FF\u0750-\u077F]/.test(text);
+                if (!hasFarsi && text.trim().length > 0) {
+                    el.classList.add(isSerif ? 'force-latin-serif' : 'force-latin-sans');
+                } else {
+                    el.classList.remove('force-latin-serif', 'force-latin-sans');
+                }
+            }
+
+            static setText(el, text, isSerif = false) {
+                if (!el) return;
+                el.innerText = text;
+                this.applySmartLatinClass(el, text, isSerif);
+            }
+
+            static setHtml(el, html, plainTextForCheck, isSerif = false) {
+                if (!el) return;
+                el.innerHTML = html;
+                this.applySmartLatinClass(el, plainTextForCheck, isSerif);
+            }
+            
+            static setPlaceholder(elId, text) {
+                const el = document.getElementById(elId);
+                if (!el) return;
+                el.placeholder = text;
+                this.applySmartLatinClass(el, text, false);
+            }
+        }
+
+        class ToastService {
+            static show(msg) {
+                const box = document.getElementById('notification-box');
+                document.getElementById('notification-text').innerText = msg;
+                box.classList.add('show');
+                setTimeout(() => box.classList.remove('show'), 3500);
+            }
+        }
+
+        class AudioService {
+            constructor(config) {
+                this.audio = document.getElementById('bg-music');
+                this.btn = document.getElementById('music-control');
+                this.iconCont = document.getElementById('music-icon-container');
+                this.config = config.MUSIC_LOOP;
+                this.isUserIntentional = false;
+                this.fadeInterval = null;
+                this.initListeners();
+            }
+
+            initListeners() {
+                this.btn.addEventListener('click', () => this.toggle());
+
+                this.audio.addEventListener('timeupdate', () => {
+                    // Only apply natural end-of-track fade if we are not manually fading
+                    if (!this.audio.duration || this.fadeInterval) return;
+                    const timeLeft = this.audio.duration - this.audio.currentTime;
+                    if (timeLeft <= this.config.fadeOutSeconds && timeLeft > 0) {
+                        this.audio.volume = Math.max(0, timeLeft / this.config.fadeOutSeconds);
+                    } else if (timeLeft > this.config.fadeOutSeconds && this.audio.volume < 1) {
+                        this.audio.volume = 1;
+                    }
+                });
+
+                this.audio.addEventListener('ended', () => {
+                    if (this.isUserIntentional) {
+                        setTimeout(() => {
+                            if (this.isUserIntentional) {
+                                this.audio.currentTime = 0;
+                                this.audio.volume = 1;
+                                this.play();
+                            }
+                        }, this.config.silenceSeconds * 1000);
+                    }
+                });
+            }
+
+            setSource(src) {
+                const wasPlaying = !this.audio.paused && this.isUserIntentional;
+                this.audio.src = src;
+                if (wasPlaying) {
+                    this.audio.volume = 1;
+                    this.play();
+                }
+            }
+
+            play() {
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = null;
+                if (!this.audio.src || this.audio.src === window.location.href) return;
+                const promise = this.audio.play();
+                if (promise !== undefined) {
+                    promise.then(() => this.updateUI(true)).catch(e => console.log("Auto-play prevented"));
+                }
+            }
+
+            pause() {
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = null;
+                this.audio.pause();
+                this.updateUI(false);
+            }
+
+            toggle() {
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = null;
+                if (this.audio.paused || !this.isUserIntentional) {
+                    this.audio.volume = 1;
+                    this.isUserIntentional = true;
+                    this.play();
+                } else {
+                    this.isUserIntentional = false;
+                    this.pause();
+                }
+            }
+
+            fadeOut(seconds, callback) {
+                if (this.audio.paused) {
+                    if (callback) callback();
+                    return;
+                }
+                const steps = 20; 
+                const volStep = this.audio.volume / (seconds * steps);
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = setInterval(() => {
+                    let newVol = this.audio.volume - volStep;
+                    if (newVol <= 0.05) { 
+                        this.audio.volume = 0;
+                        this.pause();
+                        clearInterval(this.fadeInterval);
+                        this.fadeInterval = null;
+                        if (callback) callback();
+                    } else {
+                        this.audio.volume = newVol;
+                    }
+                }, 1000 / steps);
+            }
+
+            fadeIn(seconds) {
+                this.audio.volume = 0;
+                this.play();
+                const steps = 20;
+                const volStep = 1.0 / (seconds * steps);
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = setInterval(() => {
+                    let newVol = this.audio.volume + volStep;
+                    if (newVol >= 0.95) { 
+                        this.audio.volume = 1;
+                        clearInterval(this.fadeInterval);
+                        this.fadeInterval = null;
+                    } else {
+                        this.audio.volume = newVol;
+                    }
+                }, 1000 / steps);
+            }
+
+            updateUI(isPlaying) {
+                if (isPlaying) {
+                    this.iconCont.innerHTML = `<i data-lucide="volume-2" width="20" height="20"></i>`;
+                    this.btn.classList.add('music-playing');
+                } else {
+                    this.iconCont.innerHTML = `<i data-lucide="volume-x" width="20" height="20"></i>`;
+                    this.btn.classList.remove('music-playing');
+                }
+                lucide.createIcons();
+            }
+        }
+
+        class ParticleEngine {
+            constructor(config) {
+                this.config = config.ANIMATION;
+                this.canvas = document.getElementById('gold-dust-canvas');
+                this.ctx = this.canvas.getContext('2d');
+            }
+
+            start(onMidpointCallback) {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.canvas.classList.remove('hidden');
+                
+                const totalFrames = Math.floor(this.config.durationSeconds * 60);
+                const revealFrame = Math.floor(totalFrames * 0.4); 
+                const particles = this.generateParticles(totalFrames);
+                
+                let frame = 0;
+                let callbackFired = false;
+
+                const render = () => {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    let active = false;
+                    const cx = this.canvas.width / 2;
+                    const cy = this.canvas.height / 2;
+                    const fadeOutFrames = 60;
+                    let endFadeAlpha = frame > totalFrames - fadeOutFrames ? Math.max(0, (totalFrames - frame) / fadeOutFrames) : 1;
+
+                    particles.forEach(p => {
+                        p.x += p.vx; p.y += p.vy; p.z += p.vz;
+                        if (p.z > 0 && p.z < 2000) {
+                            active = true;
+                            const scale = 350 / Math.max(1, p.z);
+                            const alpha = Math.min(1, p.z / 80) * endFadeAlpha;
+                            this.ctx.beginPath();
+                            this.ctx.arc(cx + p.x * scale, cy + p.y * scale, Math.min(p.size * scale, 35), 0, Math.PI * 2);
+                            this.ctx.fillStyle = p.color;
+                            this.ctx.globalAlpha = alpha;
+                            this.ctx.fill();
+                        }
+                    });
+
+                    frame++;
+                    if (frame >= revealFrame && !callbackFired) {
+                        callbackFired = true;
+                        if(onMidpointCallback) onMidpointCallback();
+                    }
+
+                    if (active && frame < totalFrames + 60) {
+                        requestAnimationFrame(render);
+                    }
+                    if (frame === totalFrames) this.canvas.classList.add('transition-opacity', 'duration-1000', 'opacity-0');
+                    else if (frame === totalFrames + 60) this.canvas.classList.add('hidden');
+                };
+                render();
+            }
+
+            generateParticles(totalFrames) {
+                const arr = [];
+                const baseSpeed = 1200 / totalFrames; 
+                for (let i = 0; i < this.config.particleCount; i++) {
+                    const theta = Math.random() * 2 * Math.PI;
+                    const phi = Math.acos(2 * Math.random() - 1);
+                    const speed = (Math.random() * baseSpeed * 2 + baseSpeed) * this.config.speedFactor; 
+                    arr.push({
+                        x: 0, y: 0, z: Math.random() * 800 + 200, 
+                        vx: Math.sin(phi) * Math.cos(theta) * speed * 0.8,
+                        vy: Math.sin(phi) * Math.sin(theta) * speed * 0.8,
+                        vz: -(Math.abs(Math.cos(phi)) * speed + baseSpeed * this.config.speedFactor * 1.5),
+                        size: Math.random() * 1.5 + 0.5,
+                        color: this.config.particleColors[Math.floor(Math.random() * this.config.particleColors.length)]
+                    });
+                }
+                return arr;
+            }
+        }
+
+        class FormController {
+            constructor(config) {
+                this.endpoint = config.FORMSPREE_ENDPOINT;
+                this.guestCount = 1;
+                this.initListeners();
+            }
+
+            initListeners() {
+                document.getElementById('btn-guest-minus').addEventListener('click', () => this.adjustGuests(-1));
+                document.getElementById('btn-guest-plus').addEventListener('click', () => this.adjustGuests(1));
+                
+                document.getElementById('song-wish-form').addEventListener('submit', (e) => this.submit(e, 'song-submit-btn'));
+                document.getElementById('rsvp-form').addEventListener('submit', (e) => this.submit(e, 'rsvp-submit-btn', true));
+            }
+
+            adjustGuests(amt, reset = false) {
+                if (reset) { this.guestCount = 1; } 
+                else { this.guestCount = Math.max(1, Math.min(100, this.guestCount + amt)); }
+                document.getElementById('guest-count-display').innerText = Formatter.localizeNumber(this.guestCount, window.App.langController.currentIndex);
+                document.getElementById('guest-count-input').value = this.guestCount;
+            }
+
+            async submit(e, btnId, isRsvp = false) {
+                e.preventDefault();
+                const form = e.target;
+                const btn = document.getElementById(btnId);
+                const formData = new FormData(form);
+                const originalHTML = btn.innerHTML;
+                const successMsg = WEDDING_CONFIG.translations[window.App.langController.currentIndex].toastSent;
+                
+                btn.disabled = true;
+                btn.innerHTML = `<i data-lucide="loader" class="animate-spin"></i>`;
+                lucide.createIcons();
+
+                try {
+                    if (this.endpoint.includes("your_id_here")) {
+                        await new Promise(r => setTimeout(r, 1000));
+                        ToastService.show(successMsg);
+                        form.reset();
+                        if (isRsvp) this.adjustGuests(0, true);
+                    } else {
+                        const response = await fetch(this.endpoint, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+                        if (response.ok) {
+                            ToastService.show(successMsg);
+                            form.reset();
+                            if (isRsvp) this.adjustGuests(0, true);
+                        } else ToastService.show("Error sending.");
+                    }
+                } catch (err) { ToastService.show("Network error."); }
+                
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+                lucide.createIcons();
+            }
+        }
+
+        class GalleryController {
+            constructor(config) {
+                this.config = config.GALLERY;
+                this.initListeners();
+            }
+
+            initListeners() {
+                const toggleBtn = document.getElementById('toggle-pass-btn');
+                if(toggleBtn) toggleBtn.addEventListener('click', () => this.togglePasswordVisibility());
+                document.getElementById('gallery-form').addEventListener('submit', (e) => this.unlock(e));
+            }
+
+            togglePasswordVisibility() {
+                const input = document.getElementById('gal-pass-ph');
+                const eye = document.getElementById('icon-eye');
+                const eyeOff = document.getElementById('icon-eye-off');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    eye.classList.add('hidden');
+                    eyeOff.classList.remove('hidden');
+                } else {
+                    input.type = 'password';
+                    eye.classList.remove('hidden');
+                    eyeOff.classList.add('hidden');
+                }
+            }
+
+            unlock(e) {
+                e.preventDefault();
+                const inputField = document.getElementById('gal-pass-ph');
+                const pass = inputField.value;
+                const form = document.getElementById('gallery-form');
+                const errorMsg = document.getElementById('gal-error-msg');
+                const container = document.getElementById('gallery-content');
+                const currLangObj = WEDDING_CONFIG.translations[window.App.langController.currentIndex];
+
+                const showError = (msg) => {
+                    errorMsg.innerText = msg;
+                    errorMsg.classList.remove('hidden');
+                    inputField.classList.add('border', 'border-red-500');
+                    form.classList.remove('animate-shake');
+                    void form.offsetWidth;
+                    form.classList.add('animate-shake');
+                    setTimeout(() => inputField.classList.remove('border', 'border-red-500'), 2000);
+                };
+
+                if (this.config.isLockedBeforeWedding) showError(currLangObj.toastGallery);
+                else if (pass !== this.config.password) showError(currLangObj.wrongPass);
+                else {
+                    form.classList.add('hidden', 'opacity-0');
+                    errorMsg.classList.add('hidden');
+                    container.classList.remove('hidden');
+                    this.render(container);
+                    setTimeout(() => container.classList.remove('opacity-0'), 50);
+                }
+            }
+
+            render(container) {
+                container.innerHTML = ''; 
+                if (this.config.style === 'grid') {
+                    const scrollWrapper = document.createElement('div');
+                    scrollWrapper.className = 'gallery-scroll-container';
+                    const grid = document.createElement('div');
+                    grid.className = 'custom-grid';
+                    this.config.images.forEach(src => {
+                        grid.innerHTML += `<div class="custom-grid-item shadow-sm hover:shadow-md transition-shadow cursor-pointer"><a href="${src}" target="_blank"><img src="${src}" class="hover:scale-105 transition-transform duration-500" /></a></div>`;
+                    });
+                    scrollWrapper.appendChild(grid);
+                    container.appendChild(scrollWrapper);
+                } else {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'slideshow-wrapper';
+                    wrapper.style.setProperty('--slide-speed', `${this.config.slideshowSpeedSeconds}s`);
+                    const track = document.createElement('div');
+                    track.className = 'slideshow-track';
+                    [...this.config.images, ...this.config.images].forEach(src => {
+                        track.innerHTML += `<div class="slideshow-item shadow-sm hover:shadow-md transition-shadow cursor-pointer"><a href="${src}" target="_blank"><img src="${src}" class="hover:scale-105 transition-transform duration-500" /></a></div>`;
+                    });
+                    wrapper.appendChild(track);
+                    container.appendChild(wrapper);
+                }
+            }
+        }
+
+        class LanguageController {
+            constructor(config) {
+                this.config = config;
+                this.currentIndex = 0;
+            }
+
+            select(index) {
+                try {
+                    this.currentIndex = index;
+                    const t = this.config.translations[index];
+                    document.documentElement.dir = t.dir;
+                    document.body.dir = t.dir;
+
+                    window.App.audioService.setSource(this.config.audioFiles[index]);
+
+                    const heroImg = document.getElementById('hero-main-img');
+                    if (heroImg && this.config.assets.heroImages[index]) heroImg.src = this.config.assets.heroImages[index];
+
+                    // Inject specific intro element (Text or Emoji based on Config)
+                    const tapInd = document.getElementById('tap-indicator');
+                    if (this.config.FEATURES.useTapEmoji) {
+                        const emoji = this.config.FEATURES.customTapEmoji || "✨";
+                        tapInd.innerHTML = `<div class="text-4xl animate-tapHand" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">${emoji}</div>`;
+                    } else {
+                        tapInd.innerHTML = `<p class="text-secondaryText font-sans font-medium tracking-[0.3em] text-xs animate-pulse uppercase">${t.tapToOpen}</p>`;
+                    }
+
+                    Formatter.setText(document.getElementById('footer-names'), t.short, true);
+                    Formatter.setHtml(document.getElementById('inv-parents-bride'), `${t.parentsB.n}<br>${t.parentsB.s}`, t.parentsB.n + t.parentsB.s, true);
+                    Formatter.setHtml(document.getElementById('inv-parents-groom'), `${t.parentsG.n}<br>${t.parentsG.s}`, t.parentsG.n + t.parentsG.s, true);
+                    Formatter.setText(document.getElementById('inv-parents-and'), t.andSymbol, true);
+                    Formatter.setText(document.getElementById('inv-message'), t.invMsg, false);
+                    Formatter.setHtml(document.getElementById('inv-date-display'), t.invDate.replace(/(\d+)(st|nd|rd|th)/, '$1<sup class="text-lg">$2</sup>'), t.invDate, true);
+                    Formatter.setText(document.getElementById('inv-time-display'), t.invTime, false);
+
+                    ['inv','cd','prog','loc','music','gal','rsvp'].forEach(s => {
+                        Formatter.setText(document.getElementById(`title-${s}`), t[`${s}Title`], true);
+                    });
+
+                    Formatter.setText(document.getElementById('label-days'), t.days, false);
+                    Formatter.setText(document.getElementById('label-hours'), t.hours, false);
+                    Formatter.setText(document.getElementById('label-mins'), t.mins, false);
+                    Formatter.setText(document.getElementById('label-secs'), t.secs, false);
+
+                    Formatter.setText(document.getElementById('btn-maps'), t.btnMaps, false);
+                    Formatter.setText(document.getElementById('music-msg'), t.musicMsg, false);
+                    
+                    Formatter.setPlaceholder('song-title-ph', t.phTitle);
+                    Formatter.setPlaceholder('song-artist-ph', t.phArtist);
+                    Formatter.setText(document.getElementById('btn-playlist'), t.btnPlaylist, false);
+                    
+                    Formatter.setText(document.getElementById('gal-msg'), t.galMsg, false);
+                    Formatter.setPlaceholder('gal-pass-ph', t.phPass);
+                    Formatter.setText(document.getElementById('btn-unlock'), t.btnUnlock, false);
+                    
+                    Formatter.setText(document.getElementById('rsvp-deadline-text'), t.rsvpDeadline, false);
+                    Formatter.setPlaceholder('rsvp-name-ph', t.phName);
+                    Formatter.setText(document.getElementById('label-guest-count'), t.labelGuests, false);
+                    Formatter.setPlaceholder('rsvp-dietary-ph', t.phDietary);
+                    Formatter.setText(document.getElementById('btn-rsvp'), t.btnRsvp, false);
+                    
+                    const rsvpStatus = document.getElementById('rsvp-status');
+                    if (rsvpStatus) {
+                        Formatter.setHtml(rsvpStatus, `<option value="Yes">${t.optYes}</option><option value="No">${t.optNo}</option>`, t.optYes + t.optNo, false);
+                    }
+                    
+                    window.App.formController.adjustGuests(0); 
+
+                    this.renderProgram(t);
+                    this.updateActiveFlags(index);
+
+                    if (document.getElementById('main-content').classList.contains('hidden')) {
+                        document.getElementById('lang-screen').classList.add('opacity-0', 'pointer-events-none');
+                        document.getElementById('splash-screen').classList.remove('hidden');
+                    }
+                    
+                    lucide.createIcons();
+                } catch (e) { console.error("Language transition error:", e); }
+            }
+
+            renderProgram(t) {
+                const progCont = document.getElementById('program-container');
+                progCont.innerHTML = `<div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-accentLight transform -translate-x-1/2"></div>`;
+                
+                // Select proper list based on language
+                const timesList = (this.currentIndex === 1) ? this.config.programTimesNonLatin : this.config.programTimesLatin;
+                
+                t.progItems.forEach((item, i) => {
+                    const isCol1 = i % 2 === 0;
+                    const fTime = timesList[i] || ""; 
+                    
+                    const timeClass = !(/[\u0600-\u06FF\u0750-\u077F]/.test(fTime)) ? 'force-latin-serif' : '';
+                    const itemClass = !(/[\u0600-\u06FF\u0750-\u077F]/.test(item)) ? 'force-latin-sans' : '';
+
+                    progCont.innerHTML += `
+                        <div class="relative flex items-center justify-between w-full mb-10">
+                            <div class="absolute left-1/2 top-1/2 w-6 h-[1px] bg-accentLight transform -translate-x-1/2 -translate-y-1/2"></div>
+                            <div class="w-1/2 ${isCol1 ? 'pe-6 sm:pe-8 text-end' : ''}">
+                                ${isCol1 ? `<div class="program-time font-serif text-accent mb-1 ${timeClass}" style="font-size: var(--fs-sub);">${fTime}</div><div class="font-sans font-medium text-primaryText tracking-wide uppercase ${itemClass}" style="font-size: calc(var(--fs-normal)*0.9);">${item}</div>` : ''}
+                            </div>
+                            <div class="w-1/2 ${!isCol1 ? 'ps-6 sm:ps-8 text-start' : ''}">
+                                ${!isCol1 ? `<div class="program-time font-serif text-accent mb-1 ${timeClass}" style="font-size: var(--fs-sub);">${fTime}</div><div class="font-sans font-medium text-primaryText tracking-wide uppercase ${itemClass}" style="font-size: calc(var(--fs-normal)*0.9);">${item}</div>` : ''}
+                            </div>
+                        </div>`;
+                });
+            }
+
+            updateActiveFlags(index) {
+                [0,1,2].forEach(i => {
+                    const bIntro = document.getElementById(`lang-btn-${i}`);
+                    const bTop = document.getElementById(`top-btn-${i}`);
+                    if (bIntro) i === index ? bIntro.classList.add('active') : bIntro.classList.remove('active');
+                    if (bTop) i === index ? bTop.classList.add('active') : bTop.classList.remove('active');
+                });
+            }
+        }
+
+        class WeddingApp {
+            constructor(config) {
+                this.config = config;
+                this.hasStarted = false;
+                this.checkOverlapFrame = null;
+                
+                this.audioService = new AudioService(config);
+                this.initDOM(); 
+                // Removed the buggy SpotifyService integration to guarantee player visibility
+                
+                this.particleEngine = new ParticleEngine(config);
+                this.formController = new FormController(config);
+                this.galleryController = new GalleryController(config);
+                this.langController = new LanguageController(config);
+
+                this.initIntroSequence();
+                this.initCountdown();
+                this.initScrollReveal();
+            }
+
+            initDOM() {
+                const root = document.documentElement;
+                root.style.setProperty('--fs-hero', this.config.STYLING_SIZES.fontSizeHeroNames);
+                root.style.setProperty('--fs-section', this.config.STYLING_SIZES.fontSizeSectionHeader);
+                root.style.setProperty('--fs-sub', this.config.STYLING_SIZES.fontSizeSubsectionHeader);
+                root.style.setProperty('--fs-family', this.config.STYLING_SIZES.fontSizeFamilyNames);
+                root.style.setProperty('--fs-normal', this.config.STYLING_SIZES.fontSizeNormalText);
+                
+                const mapIframe = document.getElementById('loc-map-iframe');
+                if (mapIframe) {
+                    mapIframe.style.height = this.config.STYLING_SIZES.googleMapsHeight;
+                    mapIframe.parentElement.style.height = this.config.STYLING_SIZES.googleMapsHeight;
+                }
+
+                document.body.setAttribute('data-line-style', this.config.STYLING_SIZES.decorLineStyle);
+                if (document.getElementById('envelope-wrapper')) document.getElementById('envelope-wrapper').style.transform = `scale(${this.config.ANIMATION.envelopeScale})`;
+
+                ['tl', 'tr', 'bl', 'br'].forEach(pos => document.getElementById(`floral-${pos}`).src = this.config.assets.cornerFloralImage);
+                [0,1,2].forEach(i => {
+                    document.getElementById(`preview-flag-${i}`).src = this.config.assets.flags[i];
+                    document.getElementById(`tiny-flag-${i}`).src = this.config.assets.flags[i];
+                    document.getElementById(`lang-btn-${i}`).onclick = () => this.langController.select(i);
+                    document.getElementById(`top-btn-${i}`).onclick = () => this.langController.select(i);
+                });
+
+                Formatter.setText(document.getElementById('loc-name'), this.config.location.name, true);
+                Formatter.setText(document.getElementById('loc-address'), this.config.location.address, false);
+                document.getElementById('loc-map-iframe').src = this.config.location.mapUrl;
+                document.getElementById('loc-button').href = this.config.location.link;
+                
+                // Hide sections conditionally
+                ['invitation', 'countdown', 'program', 'location', 'music', 'gallery', 'rsvp'].forEach(sec => {
+                    if (!this.config.SECTIONS[sec]) {
+                        const el = document.getElementById(`section-${sec}`);
+                        if (el) el.style.display = 'none';
+                    }
+                });
+
+                if (!this.config.FEATURES.rsvpGuestCounter) {
+                    const guestWrapper = document.getElementById('rsvp-guest-counter-wrapper');
+                    if (guestWrapper) guestWrapper.style.display = 'none';
+                }
+
+                // Bulletproof Spotify URL Parser + Dark Theme injection
+                let embedUrl = this.config.SPOTIFY.url;
+                const match = embedUrl.match(/(track|album|artist|playlist|show|episode)[\/\:]([a-zA-Z0-9]+)/);
+                if (match) {
+                    embedUrl = `https://open.spotify.com/embed/${match[1]}/${match[2]}?utm_source=generator`;
+                    if (this.config.SPOTIFY.darkTheme) {
+                        embedUrl += `&theme=0`;
+                    }
+                } else if (this.config.SPOTIFY.darkTheme && !embedUrl.includes('theme=')) {
+                    // Fallback just in case you paste an already-formatted embed link
+                    embedUrl += (embedUrl.includes('?') ? '&' : '?') + 'theme=0';
+                }
+                
+                const spotifyIframe = document.getElementById('spotify-iframe');
+                if (spotifyIframe) {
+                    spotifyIframe.src = embedUrl;
+                }
+                
+                this.renderIcons();
+            }
+
+            renderIcons() {
+                const iconMap = {
+                    'icon-invitation': { path: this.config.assets.icons.invitation, icon: 'mail' },
+                    'icon-countdown': { path: this.config.assets.icons.countdown, icon: 'clock' },
+                    'icon-program': { path: this.config.assets.icons.program, icon: 'heart' },
+                    'icon-location': { path: this.config.assets.icons.location, icon: 'map-pin' },
+                    'icon-music': { path: this.config.assets.icons.music, icon: 'music' },
+                    'icon-gallery': { path: this.config.assets.icons.gallery, icon: 'lock' },
+                    'icon-rsvp': { path: this.config.assets.icons.rsvp, icon: 'calendar-heart' }
+                };
+                const size = this.config.ANIMATION.sectionIconSize;
+                for (const [id, data] of Object.entries(iconMap)) {
+                    const c = document.getElementById(id);
+                    if (c) c.innerHTML = data.path ? `<img src="${data.path}" style="width: ${size}px; height: ${size}px; object-fit: contain;" class="mx-auto">` : `<i data-lucide="${data.icon}" stroke-width="1" width="${size}" height="${size}"></i>`;
+                }
+                lucide.createIcons();
+            }
+
+            initIntroSequence() {
+                const v1 = document.getElementById('intro-video');
+                v1.src = this.config.assets.introVideo;
+
+                const revealApp = () => {
+                    document.getElementById('splash-screen').style.opacity = '0';
+                    document.getElementById('music-control').classList.remove('hidden');
+                    document.getElementById('top-lang-switcher').classList.remove('hidden');
+                    
+                    const main = document.getElementById('main-content');
+                    main.classList.remove('hidden');
+                    void main.offsetWidth; 
+                    main.classList.remove('opacity-0');
+                    
+                    const hero = document.getElementById('hero-section');
+                    hero.classList.remove('translate-y-[20vh]', 'opacity-0');
+                    hero.classList.add('translate-y-0', 'opacity-100', 'is-revealed'); 
+                    
+                    document.body.classList.remove('no-scroll');
+                    setTimeout(() => document.getElementById('splash-screen').classList.add('hidden'), 1000);
+                };
+
+                const triggerReveal = () => {
+                    if (this.config.FEATURES.goldParticles) {
+                        this.particleEngine.start(revealApp);
+                    } else {
+                        revealApp();
+                    }
+                };
+
+                const executeOverlap = () => {
+                    if (!this.hasStarted && v1.duration > 0) {
+                        const timeLeft = v1.duration - v1.currentTime;
+                        if (timeLeft <= this.config.ANIMATION.overlapTimingSeconds) {
+                            this.hasStarted = true;
+                            triggerReveal();
+                            v1.style.transition = `opacity ${timeLeft}s ease-in-out`;
+                            v1.style.opacity = '0';
+                        }
+                    }
+                    if (!this.hasStarted && !v1.paused) this.checkOverlapFrame = requestAnimationFrame(executeOverlap);
+                };
+
+                document.getElementById('envelope-container').onclick = () => {
+                    document.getElementById('tap-indicator').style.opacity = '0';
+                    document.getElementById('skip-btn').classList.remove('hidden');
+                    
+                    this.audioService.isUserIntentional = true;
+                    this.audioService.play();
+
+                    const promise = v1.play(); 
+                    if (promise !== undefined) {
+                        promise.then(() => { this.checkOverlapFrame = requestAnimationFrame(executeOverlap); })
+                               .catch(() => { if (!this.hasStarted) { this.hasStarted = true; triggerReveal(); } });
+                    } else if (!this.hasStarted) { this.hasStarted = true; triggerReveal(); }
+                };
+
+                v1.onended = () => {
+                    if (!this.hasStarted) { this.hasStarted = true; triggerReveal(); v1.style.opacity = '0'; }
+                };
+
+                document.getElementById('skip-btn').onclick = () => { 
+                    v1.pause(); 
+                    cancelAnimationFrame(this.checkOverlapFrame);
+                    if (!this.hasStarted) { this.hasStarted = true; triggerReveal(); v1.style.transition = 'opacity 0.5s ease-out'; v1.style.opacity = '0'; }
+                };
+            }
+
+            initCountdown() {
+                setInterval(() => {
+                    const dist = new Date(this.config.weddingDate).getTime() - Date.now();
+                    if (dist < 0) return;
+                    const d = Math.floor(dist/86400000).toString().padStart(2,'0');
+                    const h = Math.floor((dist%86400000)/3600000).toString().padStart(2,'0');
+                    const m = Math.floor((dist%3600000)/60000).toString().padStart(2,'0');
+                    const s = Math.floor((dist%60000)/1000).toString().padStart(2,'0');
+                    
+                    const fd = Formatter.localizeNumber(d, this.langController.currentIndex);
+                    const fh = Formatter.localizeNumber(h, this.langController.currentIndex);
+                    const fm = Formatter.localizeNumber(m, this.langController.currentIndex);
+                    const fs = Formatter.localizeNumber(s, this.langController.currentIndex);
+                    
+                    Formatter.setText(document.getElementById('cd-days'), fd, true);
+                    Formatter.setText(document.getElementById('cd-hours'), fh, true);
+                    Formatter.setText(document.getElementById('cd-mins'), fm, true);
+                    Formatter.setText(document.getElementById('cd-secs'), fs, true);
+                }, 1000);
+            }
+
+            initScrollReveal() {
+                const obs = new IntersectionObserver((es) => es.forEach(e => e.isIntersecting && e.target.classList.add('is-visible')), { threshold: 0.1 });
+                document.querySelectorAll('.reveal-on-scroll').forEach(s => obs.observe(s));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.App = new WeddingApp(WEDDING_CONFIG);
+        });
+
+    </script>
+</body>
+</html>
