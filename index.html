@@ -10,14 +10,24 @@
     <title>Wagma & Cem's Wedding</title>
     <meta name="title" content="You're Invited! 🎉">
     <meta name="description" content="We joyfully invite you to celebrate our special day with us. Tap to open the invitation!">
+    
+    <!-- Facebook / WhatsApp / iMessage Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wedding-wagma-cem-2026.vercel.app/">
     <meta property="og:title" content="You're Invited! 🎉">
     <meta property="og:description" content="We joyfully invite you to celebrate our special day with us. Tap to open the invitation!">
-    <meta property="og:image" content="https://wedding-wagma-cem-2026.vercel.app/preview.jpg">
     <meta property="og:site_name" content="Wagma & Cen's Wedding">
+    
+    <!-- 🌟 NEW: Explicitly formatted for large WhatsApp Previews -->
+    <meta property="og:image" itemprop="image" content="https://wedding-wagma-cem-2026.vercel.app/preview.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="630">
+    <meta property="og:image:height" content="1200">
+
+    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="You're Invited! 🎉">
+    <meta property="twitter:url" content="https://wedding-wagma-cem-2026.vercel.app/">
+    <meta property="twitter:title" content="Wagma & Cem's Wedding">
     <meta property="twitter:description" content="We joyfully invite you to celebrate our special day with us. Tap to open the invitation!">
     <meta property="twitter:image" content="https://wedding-wagma-cem-2026.vercel.app/preview.jpg">
 
@@ -41,7 +51,7 @@
                 useTapEmoji: false,            // Set to true to show a bouncing emoji instead of "Tap to open" text
                 customTapEmoji: "🗝️",         // The emoji to use if useTapEmoji is true (try ✨, 🤍, 💌, or 🗝️)
                 rsvpGuestCounter: false,      // Set to false to hide the +/- guest counter in RSVP
-                goldParticles: true          // Set to false to skip the 3D explosion and just fade in
+                goldParticles: false          // Set to false to skip the 3D explosion and just fade in
             },
 
             // 📑 SECTION TOGGLES
@@ -65,8 +75,8 @@
 
             // 🎨 TOTAL CONTROL OVER ALL COLORS
             THEME_COLORS: {
-                pageBg: '#F4F0E5',           // Base background (used for solid colors and hero mask)
-                cardBg: '#FDFBF7',           // Background of the content sections
+                pageBg: '#F4EFEA',           // Base background (used for solid colors and hero mask)
+                cardBg: '#FDFBF7',           // Background of the content sections #F4F0E5 #FDFBF7
                 primaryText: '#6B4C3A',      // Main headings, names, primary text
                 secondaryText: '#8B735F',    // Subheadings, dates, times, tiny text
                 accent: '#8B5A2B',           // Strong accents (Icons, special highlighted text)
@@ -161,7 +171,7 @@
             // 🕒 INDIVIDUAL TIME LISTS
             // You can now manually define exact strings for Latin and Non-Latin languages!
             programTimesLatin: ["17:00", "19:00", "20:00", "00:00"],
-            programTimesNonLatin: ["ساحث ۵ دیگر", "ساحت ۷", "ساحث ۸", "ساحت ۱۲"],
+            programTimesNonLatin: ["ساحث ۵", "ساحت ۷", "ساحث ۸", "ساحت ۱۲"],
             
             audioFiles: ["audio/background_music/de.mp3", "audio/background_music/af.mp3", "audio/background_music/tr.mp3"],
             
@@ -199,7 +209,7 @@
                 {
                     lang: "af", dir: "rtl", short: "وژمه و جیم", andSymbol: "و",
                     parentsB: { n: "فامیل", s: "حیاتـی" }, parentsG: { n: "فامیل", s: "آدیامان" },
-                    invTitle: "محفل عروسی", invMsg: "از خانواده محترم شما خواهشمندیم تا با تشریف آوری خویش صفا بخش محفل عروسی ما باشید",
+                    invTitle: "بنام خالق یکتا", invMsg: "از خانواده محترم شما خواهشمندیم تا با تشریف آوری خویش صفا بخش محفل عروسی ما باشید",
                     invDate: "جمعھ ، ۵جون ٢٠٢۶", invTime: "",
                     cdTitle: "این قدر روز تا عروسی مانده", days: "روز", hours: "ساعت", mins: "دقیقه", secs: "ثانیه",
                     progTitle: "برنامه روز عروسی", progItems: ["پذیرای", "عقد نکاح", "غذا", "کیک عروسی"],
@@ -268,7 +278,6 @@
         let bgCss = `background-color: ${WEDDING_CONFIG.THEME_COLORS.pageBg};`;
         let heroBgCss = ``;
         
-        // Background Image Injection Logic
         if (WEDDING_CONFIG.BACKGROUND.imageUrl) {
             bgCss += `background-image: url('${WEDDING_CONFIG.BACKGROUND.imageUrl}'); background-size: cover; background-position: center; background-attachment: fixed;`;
             if (WEDDING_CONFIG.BACKGROUND.showOnlyAfterHero) {
@@ -284,19 +293,15 @@
             body { ${bgCss} }
             #hero-section { ${heroBgCss} }
             
-            /* Reveal Animations */
             .reveal-on-scroll { opacity: 0; transform: translateY(80px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
             .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
 
-            /* Dynamic RTL Fonts */
             [dir="rtl"] .font-sans, [dir="rtl"] .font-serif, [dir="rtl"] { font-family: ${WEDDING_CONFIG.THEME_FONTS.farsiSerif} !important; line-height: 2 !important; }
             [dir="rtl"] .tracking-\[0\.3em\], [dir="rtl"] .tracking-\[0\.2em\], [dir="rtl"] .tracking-\[0\.15em\], [dir="rtl"] .tracking-widest { letter-spacing: 0 !important; }
 
-            /* Smart Latin Overrides for Farsi mode */
             [dir="rtl"] .force-latin-sans { font-family: ${WEDDING_CONFIG.THEME_FONTS.mainSans} !important; line-height: 1.5 !important; letter-spacing: normal !important; }
             [dir="rtl"] .force-latin-serif { font-family: ${WEDDING_CONFIG.THEME_FONTS.mainSerif} !important; line-height: 1.5 !important; letter-spacing: normal !important; }
 
-            /* Dynamic SVG Decor Lines */
             .decor-line { transition: all 0.3s ease; height: 1px; position: relative; pointer-events: none; }
             .left-line { mask-image: linear-gradient(to right, transparent, black 80%); -webkit-mask-image: linear-gradient(to right, transparent, black 80%); }
             .right-line { mask-image: linear-gradient(to left, transparent, black 80%); -webkit-mask-image: linear-gradient(to left, transparent, black 80%); }
@@ -308,7 +313,6 @@
             body[data-line-style="flourish"] .left-line::before { left: -2px; }
             body[data-line-style="flourish"] .right-line::after { right: -2px; transform: translateY(-50%) scaleX(-1); }
 
-            /* UI Components */
             .blend-mask-circle { mask-image: radial-gradient(circle, black 40%, transparent 75%); -webkit-mask-image: radial-gradient(circle, black 40%, transparent 75%); }
             
             #notification-box {
@@ -344,7 +348,6 @@
             .floral-br { bottom: 0; right: 0; transform: scale(-1); }
             #hero-section.is-revealed .floral-corner { opacity: 0.85; }
 
-            /* Gallery Styles */
             .custom-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-flow: row dense; gap: 1rem; width: 100%; }
             .custom-grid-item { position: relative; border-radius: 0.75rem; overflow: hidden; background-color: ${WEDDING_CONFIG.THEME_COLORS.pageBg}; width: 100%; height: 100%; }
             .custom-grid-item a { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
@@ -522,8 +525,8 @@
                     <h2 id="title-music" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <p id="music-msg" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     <form id="song-wish-form" class="space-y-5 mb-10 text-start relative z-20">
-                        <input id="song-title-ph" name="Song Titel" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
-                        <input id="song-artist-ph" name="Artist" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
+                        <input id="song-title-ph" name="song_title" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
+                        <input id="song-artist-ph" name="song_artist" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
                         <button type="submit" id="song-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
                             <i data-lucide="music" width="16"></i> <span id="btn-playlist"></span>
                         </button>
@@ -577,9 +580,9 @@
                     <p id="rsvp-deadline-text" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     
                     <form id="rsvp-form" class="space-y-5 text-start relative z-20">
-                        <input id="rsvp-name-ph" required name="Name" type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
+                        <input id="rsvp-name-ph" required name="guest_name" type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
                         
-                        <select name="Zusage" id="rsvp-status" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);"></select>
+                        <select name="attendance" id="rsvp-status" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);"></select>
                         
                         <div id="rsvp-guest-counter-wrapper">
                             <label id="label-guest-count" class="block font-medium uppercase tracking-[0.15em] text-secondaryText mb-2 ps-2" style="font-size: calc(var(--fs-normal) * 0.7);"></label>
@@ -588,10 +591,10 @@
                                 <div id="guest-count-display" class="flex-1 h-full flex items-center justify-center text-primaryText font-medium" style="font-size: var(--fs-normal);">1</div>
                                 <button type="button" id="btn-guest-plus" class="flex-1 h-full border-l border-accentLight/40 flex items-center justify-center text-primaryText hover:bg-pageBg font-light cursor-pointer transition-colors" style="font-size: var(--fs-sub);">+</button>
                             </div>
-                            <input type="hidden" id="guest-count-input" name="Anzahl" value="1">
+                            <input type="hidden" id="guest-count-input" name="guest_total" value="1">
                         </div>
 
-                        <textarea id="rsvp-dietary-ph" name="Hinweise" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" rows="3" placeholder=""></textarea>
+                        <textarea id="rsvp-dietary-ph" name="dietary_restrictions" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" rows="3" placeholder=""></textarea>
                         
                         <button type="submit" id="rsvp-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
                             <i data-lucide="send" width="16"></i> <span id="btn-rsvp"></span>
@@ -1027,7 +1030,6 @@
                     const heroImg = document.getElementById('hero-main-img');
                     if (heroImg && this.config.assets.heroImages[index]) heroImg.src = this.config.assets.heroImages[index];
 
-                    // Inject specific intro element (Text or Emoji based on Config)
                     const tapInd = document.getElementById('tap-indicator');
                     if (this.config.FEATURES.useTapEmoji) {
                         const emoji = this.config.FEATURES.customTapEmoji || "✨";
@@ -1093,7 +1095,6 @@
                 const progCont = document.getElementById('program-container');
                 progCont.innerHTML = `<div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-accentLight transform -translate-x-1/2"></div>`;
                 
-                // Select proper list based on language
                 const timesList = (this.currentIndex === 1) ? this.config.programTimesNonLatin : this.config.programTimesLatin;
                 
                 t.progItems.forEach((item, i) => {
@@ -1134,12 +1135,13 @@
                 
                 this.audioService = new AudioService(config);
                 this.initDOM(); 
-                // Removed the buggy SpotifyService integration to guarantee player visibility
-                
                 this.particleEngine = new ParticleEngine(config);
                 this.formController = new FormController(config);
                 this.galleryController = new GalleryController(config);
                 this.langController = new LanguageController(config);
+
+                // Start API injector only after DOM is fully ready
+                this.injectSpotifyApi();
 
                 this.initIntroSequence();
                 this.initCountdown();
@@ -1189,25 +1191,61 @@
                     if (guestWrapper) guestWrapper.style.display = 'none';
                 }
 
-                // Bulletproof Spotify URL Parser + Dark Theme injection
-                let embedUrl = this.config.SPOTIFY.url;
-                const match = embedUrl.match(/(track|album|artist|playlist|show|episode)[\/\:]([a-zA-Z0-9]+)/);
-                if (match) {
-                    embedUrl = `https://open.spotify.com/embed/${match[1]}/${match[2]}?utm_source=generator`;
-                    if (this.config.SPOTIFY.darkTheme) {
-                        embedUrl += `&theme=0`;
-                    }
-                } else if (this.config.SPOTIFY.darkTheme && !embedUrl.includes('theme=')) {
-                    // Fallback just in case you paste an already-formatted embed link
-                    embedUrl += (embedUrl.includes('?') ? '&' : '?') + 'theme=0';
-                }
-                
-                const spotifyIframe = document.getElementById('spotify-iframe');
-                if (spotifyIframe) {
-                    spotifyIframe.src = embedUrl;
-                }
+                // We DO NOT build an iframe here. We let the API build it so it can control it.
                 
                 this.renderIcons();
+            }
+
+            injectSpotifyApi() {
+                let uri = 'spotify:playlist:37i9dQZF1DWVqfgj8NZEp1';
+                const match = this.config.SPOTIFY.url.match(/(track|album|artist|playlist|show|episode)[\/\:]([a-zA-Z0-9]+)/);
+                if (match) {
+                    uri = `spotify:${match[1]}:${match[2]}`;
+                }
+
+                let resumeTimeout = null;
+                let transitioningToPlay = false;
+
+                window.onSpotifyIframeApiReady = (IFrameAPI) => {
+                    const element = document.getElementById('spotify-iframe');
+                    const options = {
+                        uri: uri,
+                        width: '100%',
+                        height: '152',
+                        theme: this.config.SPOTIFY.darkTheme ? '0' : '1'
+                    };
+
+                    IFrameAPI.createController(element, options, (EmbedController) => {
+                        EmbedController.addListener('playback_update', e => {
+                            clearTimeout(resumeTimeout);
+
+                            if (!e.data.isPaused) {
+                                if (!this.audioService.audio.paused && !transitioningToPlay) {
+                                    transitioningToPlay = true;
+                                    EmbedController.pause();
+                                    this.audioService.fadeOut(this.config.MUSIC_LOOP.spotifyResumeDelaySeconds || 3, () => {
+                                        EmbedController.play();
+                                        setTimeout(() => { transitioningToPlay = false; }, 1000);
+                                    });
+                                } else if (!transitioningToPlay) {
+                                    this.audioService.pause();
+                                }
+                            } else {
+                                transitioningToPlay = false;
+                                if (this.audioService.isUserIntentional) {
+                                    resumeTimeout = setTimeout(() => {
+                                        this.audioService.fadeIn(this.config.MUSIC_LOOP.spotifyResumeDelaySeconds || 3);
+                                    }, (this.config.MUSIC_LOOP.spotifyResumeDelaySeconds || 3) * 1000);
+                                }
+                            }
+                        });
+                    });
+                };
+
+                const script = document.createElement('script');
+                script.src = 'https://open.spotify.com/embed/iframe-api/v1';
+                script.async = true;
+                document.body.appendChild(script);
             }
 
             renderIcons() {
@@ -1329,5 +1367,4 @@
 
     </script>
 </body>
-
 </html>
