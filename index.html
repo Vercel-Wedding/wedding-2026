@@ -51,7 +51,7 @@
                 useTapEmoji: false,            // Set to true to show a bouncing emoji instead of "Tap to open" text
                 customTapEmoji: "🗝️",         // The emoji to use if useTapEmoji is true (try ✨, 🤍, 💌, or 🗝️)
                 rsvpGuestCounter: false,      // Set to false to hide the +/- guest counter in RSVP
-                goldParticles: true          // Set to false to skip the 3D explosion and just fade in
+                goldParticles: true           // 🔥 Enabled! 3D explosion
             },
 
             // 📑 SECTION TOGGLES
@@ -76,7 +76,7 @@
             // 🎨 TOTAL CONTROL OVER ALL COLORS
             THEME_COLORS: {
                 pageBg: '#F4EFEA',           // Base background (used for solid colors and hero mask)
-                cardBg: '#FDFBF7',           // Background of the content sections #F4F0E5 #FDFBF7
+                cardBg: '#FDFBF7',           // Background of the content sections
                 primaryText: '#6B4C3A',      // Main headings, names, primary text
                 secondaryText: '#8B735F',    // Subheadings, dates, times, tiny text
                 accent: '#8B5A2B',           // Strong accents (Icons, special highlighted text)
@@ -114,6 +114,8 @@
                 fontSizeFamilyNames: "24px",
                 fontSizeHeroNames: "60px",
                 googleMapsHeight: "350px",
+                spotifyHeight: "152px",      // 🎵 Height of the Spotify player (e.g. 152px is small, 352px is large)
+                tapIndicatorPositionFromBottom: "28%", // 📏 Absolute vertical position from the bottom of the screen
                 decorLineStyle: 'flourish'
             },
 
@@ -121,16 +123,15 @@
             MUSIC_LOOP: {
                 fadeOutSeconds: 5.0,
                 silenceSeconds: 3.0
-                // Removed spotifyResumeDelaySeconds to keep things clean
             },
 
             // ✨ 3D GOLD DUST ANIMATION
             ANIMATION: {
                 envelopeScale: 2.0,
                 particleCount: 2000,
-                durationSeconds: 25.0,
-                speedFactor: 0.25,
-                overlapTimingSeconds: 1.5,
+                durationSeconds: 10.0,
+                speedFactor: 0.35,
+                overlapTimingSeconds: 2.5,
                 sectionIconSize: 175,
                 particleColors: ['#FFD700', '#DAA520', '#F8E8A6', '#FFFFFF']
             },
@@ -171,9 +172,9 @@
             // 🕒 INDIVIDUAL TIME LISTS
             // You can now manually define exact strings for Latin and Non-Latin languages!
             programTimesLatin: ["17:00", "19:00", "20:00", "00:00"],
-            programTimesNonLatin: ["ساحث ۵", "ساحت ۷", "ساحث ۸", "ساحت ۱۲"],
+            programTimesNonLatin: ["ساحت ۵", "ساحت ۷", "ساحت ۸", "ساحت ۱۲"],
             
-            audioFiles: ["audio/background_music/de.mp3", "audio/background_music/af.mp3", "audio/background_music/tr.mp3"],
+            audioFiles: ["audio/background_music/de2.mp3", "audio/background_music/af.mp3", "audio/background_music/tr2.mp3"],
             
             assets: {
                 heroImages: [
@@ -197,7 +198,7 @@
                 {
                     lang: "de", dir: "ltr", short: "Wagma & Cem", andSymbol: "&",
                     parentsB: { n: "Familie", s: "Hayatie" }, parentsG: { n: "Familie", s: "Adıyaman" },
-                    invTitle: "Hochzeitseinladung", invMsg: "Wir laden Euch herzlich ein, unsere Hochzeit mit uns zu feiern. Wir freuen uns, diesen ganz besonderen Moment mit Euch zu teilen!",
+                    invTitle: "Hochzeitseinladung", invMsg: "Wir heiraten! Wir möchten diesen besonderen Moment gerne mit Euch, unseren lieben Freunden, teilen und laden Euch herzlich zu unserer Hochzeitsfeier ein.",
                     invDate: "Freitag, 05. Juni 2026", invTime: "",
                     cdTitle: "Countdown", days: "Tage", hours: "Std", mins: "Min", secs: "Sek",
                     progTitle: "Tagesprogramm", progItems: ["Empfang", "Trauung", "Offenes Buffet", "Torte"],
@@ -395,7 +396,7 @@
             <div class="divider-v"></div>
             <button id="lang-btn-2" class="flag-btn"><img id="preview-flag-2" alt="TR"></button>
         </div>
-        <p class="text-secondaryText tracking-[0.2em] uppercase text-[10px] sm:text-xs font-medium opacity-70">Please select your language.</p>
+        <p class="text-secondaryText tracking-[0.2em] indent-[0.2em] uppercase text-[10px] sm:text-xs font-medium opacity-70">Please select your language.</p>
     </div>
 
     <!-- FLOATING CONTROLS -->
@@ -412,16 +413,20 @@
     </div>
 
     <!-- SPLASH SCREEN (Video Intro) -->
-    <div id="splash-screen" class="fixed inset-0 z-50 bg-pageBg flex flex-col items-center justify-center transition-opacity duration-1000 hidden">
-        <div id="envelope-container" class="relative cursor-pointer group flex flex-col items-center z-10 w-full max-w-2xl mx-auto">
+    <!-- The entire screen is now clickable, guaranteeing the envelope opens -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-pageBg flex flex-col items-center justify-center transition-opacity duration-1000 hidden cursor-pointer">
+        <div id="envelope-container" class="relative group flex flex-col items-center z-10 w-full max-w-2xl mx-auto pointer-events-none">
             <div id="envelope-wrapper" class="w-[260px] h-[380px] sm:w-[320px] sm:h-[460px] transition-transform duration-500 group-hover:scale-105 blend-mask-circle bg-pageBg">
                 <video id="intro-video" playsinline preload="auto" class="w-full h-full object-cover transition-opacity duration-500"></video>
             </div>
-            <div id="tap-indicator" class="mt-8 transition-opacity duration-500 flex flex-col items-center">
-                <!-- Tap content injected dynamically based on config -->
-            </div>
         </div>
-        <button id="skip-btn" class="absolute top-8 right-8 text-secondaryText hover:text-primaryText text-xs tracking-widest uppercase z-50 cursor-pointer hidden transition-colors">Skip</button>
+        
+        <!-- 100% Mathematically centered absolute div -->
+        <div id="tap-indicator" class="absolute left-0 right-0 flex justify-center pointer-events-none z-20 transition-opacity duration-500">
+            <!-- Tap content injected securely via JS -->
+        </div>
+
+        <button id="skip-btn" class="absolute top-8 right-8 text-secondaryText hover:text-primaryText text-xs tracking-widest uppercase z-50 cursor-pointer hidden transition-colors" style="padding-left: 0.1em;">Skip</button>
     </div>
 
     <!-- MAIN INVITATION CONTENT -->
@@ -448,7 +453,7 @@
                     <div class="decor-line bg-accentLight right-line flex-grow"></div>
                 </div>
                 <div class="text-center">
-                    <h2 id="title-inv" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h2 id="title-inv" class="font-serif text-primaryText mb-8 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-8 mb-8 px-2 max-w-xl mx-auto">
                         <div id="inv-parents-bride" class="font-serif text-primaryText leading-relaxed" style="font-size: var(--fs-family);"></div>
                         <div id="inv-parents-and" class="font-serif text-accent text-3xl sm:text-4xl italic px-2 pb-2"></div> 
@@ -456,7 +461,7 @@
                     </div>
                     <p id="inv-message" class="font-light leading-relaxed mb-8 px-2 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     <div id="inv-date-display" class="font-serif text-accent my-6" style="font-size: var(--fs-section);"></div>
-                    <p id="inv-time-display" class="tracking-widest uppercase font-light mt-4 text-secondaryText" style="font-size: var(--fs-normal);"></p>
+                    <p id="inv-time-display" class="tracking-widest indent-[0.1em] uppercase font-light mt-4 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                 </div>
             </section>
 
@@ -468,12 +473,12 @@
                     <div class="decor-line bg-accentLight right-line flex-grow"></div>
                 </div>
                 <div class="text-center">
-                    <h2 id="title-cd" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h2 id="title-cd" class="font-serif text-primaryText mb-8 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <div class="flex justify-center gap-3 sm:gap-6 text-center" dir="ltr">
-                        <div class="flex flex-col items-center"><div id="cd-days" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-days" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
-                        <div class="flex flex-col items-center"><div id="cd-hours" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-hours" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
-                        <div class="flex flex-col items-center"><div id="cd-mins" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-mins" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
-                        <div class="flex flex-col items-center"><div id="cd-secs" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-secs" class="tracking-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                        <div class="flex flex-col items-center"><div id="cd-days" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-days" class="tracking-[0.2em] indent-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                        <div class="flex flex-col items-center"><div id="cd-hours" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-hours" class="tracking-[0.2em] indent-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                        <div class="flex flex-col items-center"><div id="cd-mins" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-mins" class="tracking-[0.2em] indent-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
+                        <div class="flex flex-col items-center"><div id="cd-secs" class="w-14 h-14 sm:w-20 sm:h-20 bg-pageBg rounded-2xl flex items-center justify-center font-serif text-primaryText shadow-inner mb-3" style="font-size: var(--fs-section);">00</div><span id="label-secs" class="tracking-[0.2em] indent-[0.2em] text-secondaryText uppercase" style="font-size: calc(var(--fs-normal) * 0.7);"></span></div>
                     </div>
                 </div>
             </section>
@@ -486,7 +491,7 @@
                     <div class="decor-line bg-accentLight right-line flex-grow"></div>
                 </div>
                 <div class="text-center">
-                    <h2 id="title-prog" class="font-serif text-primaryText mb-12 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h2 id="title-prog" class="font-serif text-primaryText mb-12 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <div id="program-container" class="relative w-full max-w-sm mx-auto py-6">
                         <div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-accentLight transform -translate-x-1/2"></div>
                     </div>
@@ -501,13 +506,13 @@
                     <div class="decor-line bg-accentLight right-line flex-grow"></div>
                 </div>
                 <div class="text-center">
-                    <h2 id="title-loc" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h2 id="title-loc" class="font-serif text-primaryText mb-8 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <h3 id="loc-name" class="font-serif text-primaryText mb-2" style="font-size: var(--fs-sub);"></h3>
                     <p id="loc-address" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     <div class="w-full bg-pageBg rounded-2xl overflow-hidden relative shadow-sm">
                         <iframe id="loc-map-iframe" src="" width="100%" style="border:0; filter: grayscale(0.5) opacity(0.9);" allowfullscreen="" loading="lazy"></iframe>
                     </div>
-                    <a id="loc-button" href="" target="_blank" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md mt-6 cursor-pointer z-20 relative transition-colors" style="font-size: calc(var(--fs-normal) * 0.8);">
+                    <a id="loc-button" href="" target="_blank" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] indent-[0.2em] hover:bg-buttonHover shadow-md mt-6 cursor-pointer z-20 relative transition-colors" style="font-size: calc(var(--fs-normal) * 0.8);">
                         <i data-lucide="map-pin" stroke-width="2" width="16" height="16"></i>
                         <span id="btn-maps"></span>
                     </a>
@@ -522,19 +527,19 @@
                     <div class="decor-line bg-accentLight right-line flex-grow"></div>
                 </div>
                 <div class="text-center">
-                    <h2 id="title-music" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h2 id="title-music" class="font-serif text-primaryText mb-8 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <p id="music-msg" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     <form id="song-wish-form" class="space-y-5 mb-10 text-start relative z-20">
                         <input id="song-title-ph" name="song_title" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
                         <input id="song-artist-ph" name="song_artist" required type="text" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" placeholder="">
-                        <button type="submit" id="song-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
+                        <button type="submit" id="song-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] indent-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
                             <i data-lucide="music" width="16"></i> <span id="btn-playlist"></span>
                         </button>
                     </form>
                     
                     <div class="w-full rounded-2xl overflow-hidden shadow-sm relative z-20 bg-pageBg">
                         <!-- BULLETPROOF IFRAME -->
-                        <iframe id="spotify-iframe" style="border-radius:16px" src="" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <iframe id="spotify-iframe" style="border-radius:16px" src="" width="100%" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     </div>
                 </div>
             </section>
@@ -547,7 +552,7 @@
                     <div class="decor-line bg-accentLight right-line flex-grow"></div>
                 </div>
                 <div class="text-center">
-                    <h2 id="title-gal" class="font-serif text-primaryText mb-6 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h2 id="title-gal" class="font-serif text-primaryText mb-6 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <p id="gal-msg" class="font-light leading-relaxed mb-8 px-2 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     
                     <form id="gallery-form" class="space-y-4 max-w-sm mx-auto relative z-20 transition-all duration-500">
@@ -559,7 +564,7 @@
                             </button>
                         </div>
                         <p id="gal-error-msg" class="text-red-500 text-xs hidden italic mt-2"></p>
-                        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md cursor-pointer transition-colors" style="font-size: calc(var(--fs-normal) * 0.8);">
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] indent-[0.2em] hover:bg-buttonHover shadow-md cursor-pointer transition-colors" style="font-size: calc(var(--fs-normal) * 0.8);">
                             <i data-lucide="lock" width="16"></i> <span id="btn-unlock"></span>
                         </button>
                     </form>
@@ -576,7 +581,7 @@
                     <div class="decor-line bg-accentLight right-line flex-grow"></div>
                 </div>
                 <div class="text-center">
-                    <h2 id="title-rsvp" class="font-serif text-primaryText mb-8 tracking-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
+                    <h2 id="title-rsvp" class="font-serif text-primaryText mb-8 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <p id="rsvp-deadline-text" class="font-light mb-8 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     
                     <form id="rsvp-form" class="space-y-5 text-start relative z-20">
@@ -585,7 +590,7 @@
                         <select name="attendance" id="rsvp-status" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);"></select>
                         
                         <div id="rsvp-guest-counter-wrapper">
-                            <label id="label-guest-count" class="block font-medium uppercase tracking-[0.15em] text-secondaryText mb-2 ps-2" style="font-size: calc(var(--fs-normal) * 0.7);"></label>
+                            <label id="label-guest-count" class="block font-medium uppercase tracking-[0.15em] indent-[0.15em] text-secondaryText mb-2 ps-2" style="font-size: calc(var(--fs-normal) * 0.7);"></label>
                             <div class="flex items-center w-full max-w-[140px] h-12 bg-cardBg border border-accentLight/40 rounded-xl overflow-hidden" dir="ltr">
                                 <button type="button" id="btn-guest-minus" class="flex-1 h-full border-r border-accentLight/40 flex items-center justify-center text-primaryText hover:bg-pageBg font-light cursor-pointer transition-colors" style="font-size: var(--fs-sub);">-</button>
                                 <div id="guest-count-display" class="flex-1 h-full flex items-center justify-center text-primaryText font-medium" style="font-size: var(--fs-normal);">1</div>
@@ -596,7 +601,7 @@
 
                         <textarea id="rsvp-dietary-ph" name="dietary_restrictions" class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 ps-4 focus:ring-1 focus:ring-inputBorderFocus transition-colors" style="font-size: var(--fs-normal);" rows="3" placeholder=""></textarea>
                         
-                        <button type="submit" id="rsvp-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
+                        <button type="submit" id="rsvp-submit-btn" class="w-full flex items-center justify-center gap-2 bg-buttonBg text-buttonText rounded-xl p-4 uppercase tracking-[0.2em] indent-[0.2em] hover:bg-buttonHover shadow-md transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed" style="font-size: calc(var(--fs-normal) * 0.8);">
                             <i data-lucide="send" width="16"></i> <span id="btn-rsvp"></span>
                         </button>
                     </form>
@@ -740,6 +745,46 @@
                     this.isUserIntentional = false;
                     this.pause();
                 }
+            }
+
+            fadeOut(seconds, callback) {
+                if (this.audio.paused) {
+                    if (callback) callback();
+                    return;
+                }
+                const steps = 20; 
+                const volStep = this.audio.volume / (seconds * steps);
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = setInterval(() => {
+                    let newVol = this.audio.volume - volStep;
+                    if (newVol <= 0.05) { 
+                        this.audio.volume = 0;
+                        this.pause();
+                        clearInterval(this.fadeInterval);
+                        this.fadeInterval = null;
+                        if (callback) callback();
+                    } else {
+                        this.audio.volume = newVol;
+                    }
+                }, 1000 / steps);
+            }
+
+            fadeIn(seconds) {
+                this.audio.volume = 0;
+                this.play();
+                const steps = 20;
+                const volStep = 1.0 / (seconds * steps);
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = setInterval(() => {
+                    let newVol = this.audio.volume + volStep;
+                    if (newVol >= 0.95) { 
+                        this.audio.volume = 1;
+                        clearInterval(this.fadeInterval);
+                        this.fadeInterval = null;
+                    } else {
+                        this.audio.volume = newVol;
+                    }
+                }, 1000 / steps);
             }
 
             updateUI(isPlaying) {
@@ -1000,9 +1045,10 @@
                     const tapInd = document.getElementById('tap-indicator');
                     if (this.config.FEATURES.useTapEmoji) {
                         const emoji = this.config.FEATURES.customTapEmoji || "✨";
-                        tapInd.innerHTML = `<div class="text-4xl animate-tapHand" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">${emoji}</div>`;
+                        tapInd.innerHTML = `<div class="text-4xl animate-tapHand text-center" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">${emoji}</div>`;
                     } else {
-                        tapInd.innerHTML = `<p class="text-secondaryText font-sans font-medium tracking-[0.3em] text-xs animate-pulse uppercase">${t.tapToOpen}</p>`;
+                        // padding-left perfectly balances the right-side tracking space for 100% mathematical center
+                        tapInd.innerHTML = `<p class="text-secondaryText font-sans font-medium tracking-[0.3em] text-xs animate-pulse uppercase text-center" style="padding-left: 0.3em;">${t.tapToOpen}</p>`;
                     }
 
                     Formatter.setText(document.getElementById('footer-names'), t.short, true);
@@ -1075,10 +1121,10 @@
                         <div class="relative flex items-center justify-between w-full mb-10">
                             <div class="absolute left-1/2 top-1/2 w-6 h-[1px] bg-accentLight transform -translate-x-1/2 -translate-y-1/2"></div>
                             <div class="w-1/2 ${isCol1 ? 'pe-6 sm:pe-8 text-end' : ''}">
-                                ${isCol1 ? `<div class="program-time font-serif text-accent mb-1 ${timeClass}" style="font-size: var(--fs-sub);">${fTime}</div><div class="font-sans font-medium text-primaryText tracking-wide uppercase ${itemClass}" style="font-size: calc(var(--fs-normal)*0.9);">${item}</div>` : ''}
+                                ${isCol1 ? `<div class="program-time font-serif text-accent mb-1 ${timeClass}" style="font-size: var(--fs-sub);">${fTime}</div><div class="font-sans font-medium text-primaryText tracking-wide uppercase ${itemClass}" style="font-size: calc(var(--fs-normal)*0.9); padding-left: 0.05em;">${item}</div>` : ''}
                             </div>
                             <div class="w-1/2 ${!isCol1 ? 'ps-6 sm:ps-8 text-start' : ''}">
-                                ${!isCol1 ? `<div class="program-time font-serif text-accent mb-1 ${timeClass}" style="font-size: var(--fs-sub);">${fTime}</div><div class="font-sans font-medium text-primaryText tracking-wide uppercase ${itemClass}" style="font-size: calc(var(--fs-normal)*0.9);">${item}</div>` : ''}
+                                ${!isCol1 ? `<div class="program-time font-serif text-accent mb-1 ${timeClass}" style="font-size: var(--fs-sub);">${fTime}</div><div class="font-sans font-medium text-primaryText tracking-wide uppercase ${itemClass}" style="font-size: calc(var(--fs-normal)*0.9); padding-left: 0.05em;">${item}</div>` : ''}
                             </div>
                         </div>`;
                 });
@@ -1127,6 +1173,12 @@
                     mapIframe.parentElement.style.height = this.config.STYLING_SIZES.googleMapsHeight;
                 }
 
+                // Explicitly set the absolute vertical position from bottom using JS
+                const tapIndicator = document.getElementById('tap-indicator');
+                if (tapIndicator) {
+                    tapIndicator.style.bottom = this.config.STYLING_SIZES.tapIndicatorPositionFromBottom || "29%";
+                }
+
                 document.body.setAttribute('data-line-style', this.config.STYLING_SIZES.decorLineStyle);
                 if (document.getElementById('envelope-wrapper')) document.getElementById('envelope-wrapper').style.transform = `scale(${this.config.ANIMATION.envelopeScale})`;
 
@@ -1172,6 +1224,7 @@
                 const spotifyIframe = document.getElementById('spotify-iframe');
                 if (spotifyIframe) {
                     spotifyIframe.src = embedUrl;
+                    spotifyIframe.style.height = this.config.STYLING_SIZES.spotifyHeight || "352px";
                 }
                 
                 this.renderIcons();
@@ -1238,7 +1291,10 @@
                     if (!this.hasStarted && !v1.paused) this.checkOverlapFrame = requestAnimationFrame(executeOverlap);
                 };
 
-                document.getElementById('envelope-container').onclick = () => {
+                // Added click handler to the ENTIRE splash screen wrapper so clicking text also triggers it safely
+                document.getElementById('splash-screen').onclick = (e) => {
+                    if (e.target.id === 'skip-btn') return;
+                    
                     document.getElementById('tap-indicator').style.opacity = '0';
                     document.getElementById('skip-btn').classList.remove('hidden');
                     
@@ -1256,7 +1312,8 @@
                     if (!this.hasStarted) { this.hasStarted = true; triggerReveal(); v1.style.opacity = '0'; }
                 };
 
-                document.getElementById('skip-btn').onclick = () => { 
+                document.getElementById('skip-btn').onclick = (e) => { 
+                    e.stopPropagation();
                     v1.pause(); 
                     cancelAnimationFrame(this.checkOverlapFrame);
                     if (!this.hasStarted) { this.hasStarted = true; triggerReveal(); v1.style.transition = 'opacity 0.5s ease-out'; v1.style.opacity = '0'; }
