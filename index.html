@@ -304,8 +304,9 @@
             .reveal-on-scroll { opacity: 0; transform: translateY(80px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
             .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
 
+            /* 🔥 FIX 2: Explicitly force normal letter-spacing for RTL text to prevent iOS Safari from snapping Nastaliq cursive letters apart */
+            [dir="rtl"] * { letter-spacing: normal !important; text-indent: 0 !important; }
             [dir="rtl"] .font-sans, [dir="rtl"] .font-serif, [dir="rtl"] { font-family: ${WEDDING_CONFIG.THEME_FONTS.farsiSerif} !important; line-height: 2 !important; }
-            [dir="rtl"] .tracking-\[0\.3em\], [dir="rtl"] .tracking-\[0\.2em\], [dir="rtl"] .tracking-\[0\.15em\], [dir="rtl"] .tracking-widest { letter-spacing: 0 !important; }
 
             [dir="rtl"] .force-latin-sans { font-family: ${WEDDING_CONFIG.THEME_FONTS.mainSans} !important; line-height: 1.5 !important; letter-spacing: normal !important; }
             [dir="rtl"] .force-latin-serif { font-family: ${WEDDING_CONFIG.THEME_FONTS.mainSerif} !important; line-height: 1.5 !important; letter-spacing: normal !important; }
@@ -424,7 +425,8 @@
     <div id="splash-screen" class="fixed inset-0 z-50 bg-pageBg flex flex-col items-center justify-center transition-opacity duration-1000 hidden cursor-pointer">
         <div id="envelope-container" class="relative group flex flex-col items-center z-10 w-full max-w-2xl mx-auto pointer-events-none">
             <div id="envelope-wrapper" class="w-[260px] h-[380px] sm:w-[320px] sm:h-[460px] transition-transform duration-500 group-hover:scale-105 blend-mask-circle bg-pageBg">
-                <video id="intro-video" playsinline preload="auto" class="w-full h-full object-cover transition-opacity duration-500"></video>
+                <!-- 🔥 FIX 1: Added 'muted' to guarantee iOS Safari actually preloads the video -->
+                <video id="intro-video" playsinline muted preload="auto" class="w-full h-full object-cover transition-opacity duration-500"></video>
             </div>
         </div>
         
@@ -562,7 +564,6 @@
                     <h2 id="title-gal" class="font-serif text-primaryText mb-6 tracking-[0.15em] indent-[0.15em] uppercase" style="font-size: var(--fs-section);"></h2>
                     <p id="gal-msg" class="font-light leading-relaxed mb-8 px-2 text-secondaryText" style="font-size: var(--fs-normal);"></p>
                     
-                    <!-- 🔥 Full-width form layout -->
                     <form id="gallery-form" class="space-y-5 relative z-20 transition-all duration-500 text-start">
                         <div class="relative">
                             <input id="gal-pass-ph" type="password" required class="w-full bg-inputBg text-inputText border-none rounded-xl p-4 pe-12 text-center italic transition-colors focus:ring-1 focus:ring-inputBorderFocus" style="font-size: var(--fs-normal);" placeholder="">
@@ -720,10 +721,27 @@
             setSource(src) {
                 const wasPlaying = !this.audio.paused && this.isUserIntentional;
                 this.audio.src = src;
-                this.audio.load(); // 🔥 Vital for forcing mobile browsers to fetch new track
+                this.audio.load(); 
                 if (wasPlaying) {
                     this.audio.volume = 1;
                     this.play();
+                }
+            }
+
+            // 🔥 FIX 3: Force iOS to unlock the audio context completely silently upon their first tap (the language flag)
+            unlock() {
+                // If the user has already opened the envelope and music is playing, don't interrupt it!
+                if (this.isUserIntentional) return; 
+
+                const p = this.audio.play();
+                if (p !== undefined) {
+                    p.then(() => {
+                        // Double check the envelope wasn't opened in the exact millisecond this was loading
+                        if (!this.isUserIntentional) {
+                            this.audio.pause();
+                            this.audio.currentTime = 0;
+                        }
+                    }).catch(() => {}); // Ignore errors since this is purely a silent unlock mechanism
                 }
             }
 
@@ -732,7 +750,7 @@
                 this.fadeInterval = null;
                 if (!this.audio.src || this.audio.src === window.location.href) return;
                 
-                this.audio.volume = 1; // 🔥 Guarantee we aren't starting muted
+                this.audio.volume = 1; 
                 
                 const promise = this.audio.play();
                 if (promise !== undefined) {
@@ -895,7 +913,7 @@
         }
 
         // ==============================================================
-        // 🚀 SUPABASE FORM CONTROLLER (Separated Tables)
+        // 🚀 SUPABASE FORM CONTROLLER
         // ==============================================================
         class FormController {
             constructor(config) {
@@ -903,7 +921,6 @@
                 this.guestCount = 1;
                 this.supabase = null;
 
-                // Safely initialize Supabase ONLY if you have pasted real keys
                 if (config.SUPABASE.url && !config.SUPABASE.url.includes("PASTE_YOUR")) {
                     try {
                         this.supabase = window.supabase.createClient(config.SUPABASE.url, config.SUPABASE.anonKey);
@@ -924,7 +941,6 @@
                 const wishForm = document.getElementById('song-wish-form');
                 const rsvpForm = document.getElementById('rsvp-form');
                 
-                // Route both forms to the new Supabase submit method
                 if (wishForm) wishForm.addEventListener('submit', (e) => this.submit(e, 'song-submit-btn', false));
                 if (rsvpForm) rsvpForm.addEventListener('submit', (e) => this.submit(e, 'rsvp-submit-btn', true));
             }
@@ -945,11 +961,9 @@
                 const formData = new FormData(form);
                 const originalHTML = btn.innerHTML;
                 
-                // Get the translated success message
                 const t = WEDDING_CONFIG.translations[window.App.langController.currentIndex];
                 const successMsg = t.toastSent;
                 
-                // Loading State
                 btn.disabled = true;
                 btn.innerHTML = `<i data-lucide="loader" class="animate-spin"></i>`;
                 lucide.createIcons();
@@ -959,7 +973,6 @@
                     let targetTable = '';
 
                     if (isRsvp) {
-                        // 1. Build STRICT RSVP Data format (No empty song/email fields)
                         const attendanceVal = formData.get('attendance');
                         const isAttending = (attendanceVal === t.optYes || attendanceVal === "Yes");
                         
@@ -971,27 +984,23 @@
                             isDeleted: false,
                             timestamp: Date.now()
                         };
-                        targetTable = 'rsvps'; // Route to RSVP table
+                        targetTable = 'rsvps'; 
                     } else {
-                        // 2. Build STRICT Music Wish Data format (No empty guest/attendance fields)
                         payload = {
                             songTitle: formData.get('song_title') || '',
                             songArtist: formData.get('song_artist') || '',
                             isDeleted: false,
                             timestamp: Date.now()
                         };
-                        targetTable = 'music_requests'; // Route to the Music table
+                        targetTable = 'music_requests'; 
                     }
 
-                    // 3. Send to Supabase Database securely
                     if (!this.supabase) {
-                        // Simulation mode so it doesn't break if you haven't pasted your keys yet
                         await new Promise(r => setTimeout(r, 1000));
                         ToastService.show(successMsg + " (Simulation)");
                         form.reset();
                         if (isRsvp) this.adjustGuests(0, true);
                     } else {
-                        // Actual database insertion
                         const { data, error } = await this.supabase
                             .from(targetTable)
                             .insert([payload]);
@@ -1008,7 +1017,6 @@
                     ToastService.show("Error sending. Please try again."); 
                 }
                 
-                // Reset Button State
                 btn.disabled = false;
                 btn.innerHTML = originalHTML;
                 lucide.createIcons();
@@ -1116,6 +1124,7 @@
                     document.body.dir = t.dir;
 
                     window.App.audioService.setSource(this.config.audioFiles[index]);
+                    window.App.audioService.unlock(); // 🔥 Explicitly unlocks iOS audio context silently here!
 
                     const heroImg = document.getElementById('hero-main-img');
                     if (heroImg && this.config.assets.heroImages[index]) heroImg.src = this.config.assets.heroImages[index];
@@ -1125,7 +1134,6 @@
                         const emoji = this.config.FEATURES.customTapEmoji || "✨";
                         tapInd.innerHTML = `<div class="text-4xl animate-tapHand text-center" style="filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">${emoji}</div>`;
                     } else {
-                        // padding-left perfectly balances the right-side tracking space for 100% mathematical center
                         tapInd.innerHTML = `<p class="text-secondaryText font-sans font-medium tracking-[0.3em] text-xs animate-pulse uppercase text-center" style="padding-left: 0.3em;">${t.tapToOpen}</p>`;
                     }
 
@@ -1251,7 +1259,6 @@
                     mapIframe.parentElement.style.height = this.config.STYLING_SIZES.googleMapsHeight;
                 }
 
-                // Explicitly set the absolute vertical position from bottom using JS
                 const tapIndicator = document.getElementById('tap-indicator');
                 if (tapIndicator) {
                     tapIndicator.style.bottom = this.config.STYLING_SIZES.tapIndicatorPositionFromBottom || "29%";
@@ -1286,7 +1293,6 @@
                     if (guestWrapper) guestWrapper.style.display = 'none';
                 }
 
-                // Bulletproof Spotify URL Parser + Dark Theme injection
                 let embedUrl = this.config.SPOTIFY.url;
                 const match = embedUrl.match(/(track|album|artist|playlist|show|episode)[\/\:]([a-zA-Z0-9]+)/);
                 if (match) {
@@ -1295,7 +1301,6 @@
                         embedUrl += `&theme=0`;
                     }
                 } else if (this.config.SPOTIFY.darkTheme && !embedUrl.includes('theme=')) {
-                    // Fallback just in case you paste an already-formatted embed link
                     embedUrl += (embedUrl.includes('?') ? '&' : '?') + 'theme=0';
                 }
                 
@@ -1328,7 +1333,8 @@
 
             initIntroSequence() {
                 const v1 = document.getElementById('intro-video');
-                v1.src = this.config.assets.introVideo;
+                // 🔥 FIX 1: Appending #t=0.001 forces iOS to fetch and display the very first frame of the video
+                v1.src = this.config.assets.introVideo + "#t=0.001";
 
                 const revealApp = () => {
                     document.getElementById('splash-screen').style.opacity = '0';
@@ -1369,7 +1375,6 @@
                     if (!this.hasStarted && !v1.paused) this.checkOverlapFrame = requestAnimationFrame(executeOverlap);
                 };
 
-                // Added click handler to the ENTIRE splash screen wrapper so clicking text also triggers it safely
                 document.getElementById('splash-screen').onclick = (e) => {
                     if (e.target.id === 'skip-btn') return;
                     
